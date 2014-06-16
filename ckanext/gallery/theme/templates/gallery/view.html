@@ -1,0 +1,17 @@
+{% extends "dataviewer/base.html" %}
+
+{% block page %}
+  <div id="gallery" data-toggle="modal-gallery" data-target="#modal-gallery">
+    {% for record in records %}
+        {% if record.get(image_field, None) %}
+            {% set title = record.get(title_field, None) %}
+            <a href="{{ record.get(image_field, None) }}" title="{{ title }}" data-gallery="gallery" class="gallery-thumbnail">
+                <img src="{{ h.thumbnail_url(record, thumbnail_field, thumbnail_params) }}" alt="{{ title }}" />
+            </a>
+        {% endif %}
+    {% endfor %}
+  </div>
+
+{% resource 'ckanext-gallery/main' %}
+
+{% endblock %}

@@ -1,0 +1,13 @@
+#modal-gallery{
+    /* Override so we don't use the fade */
+    margin-top: 0!important;
+}
+
+#modal-gallery .modal-image{
+    max-height: 450px;
+}
+
+.gallery-thumbnail img{
+    max-width: 200px;
+    max-height: 100px;
+}
