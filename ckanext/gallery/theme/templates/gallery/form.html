@@ -8,7 +8,7 @@
   {{ form.info(_('Thumbnail field to use in the gallery.'), inline=True) }}
 {% endcall %}
 
-{% call form.input('thumbnail_params', label=_('Thumbnail parameters'), value=data.thumbnail_params, error=errors.thumbnail_params, is_required=true) %}
+{% call form.input('thumbnail_params', label=_('Thumbnail parameters'), value=data.thumbnail_params, error=errors.thumbnail_params) %}
   {{ form.info(_('Extra paramters to append to the thumbnail URL.'), inline=True) }}
 {% endcall %}
 
