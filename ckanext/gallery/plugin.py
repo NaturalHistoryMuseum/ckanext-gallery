@@ -67,6 +67,7 @@ class GalleryPlugin(p.SingletonPlugin):
             'full_page_edit': False
         }
 
+    # IDatastore
     def datastore_search(self, context, data_dict, all_field_ids, query_dict):
 
         clauses = []
@@ -122,10 +123,11 @@ class GalleryPlugin(p.SingletonPlugin):
             'resource_id': data_dict['resource']['id'],
             'limit': 100,
             'offset': 0,
-            'filters': {
-                image_field: IS_NOT_NULL,
-                thumbnail_field: IS_NOT_NULL
-            }
+            # TODO: This isn't working
+            # 'filters': {
+            #     image_field: IS_NOT_NULL,
+            #     thumbnail_field: IS_NOT_NULL
+            # }
         }
 
         context = {'model': model, 'session': model.Session, 'user': c.user or c.author}
