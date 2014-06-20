@@ -3,9 +3,11 @@
 {% block page %}
   <div id="gallery" data-toggle="modal-gallery" data-target="#modal-gallery">
     {% for record in records %}
-        {% if record.get(image_field, None) %}
+        {%  set image = record.get(image_field, None) %}
+
+        {% if image %}
             {% set title = record.get(title_field, None) %}
-            <a href="{{ record.get(image_field, None) }}" title="{{ title }}" data-gallery="gallery" class="gallery-thumbnail">
+            <a href="{{ image }}" title="{{ title }}" data-gallery="gallery" class="gallery-thumbnail">
                 <img src="{{ h.thumbnail_url(record, thumbnail_field, thumbnail_params) }}" alt="{{ title }}" />
             </a>
         {% endif %}
