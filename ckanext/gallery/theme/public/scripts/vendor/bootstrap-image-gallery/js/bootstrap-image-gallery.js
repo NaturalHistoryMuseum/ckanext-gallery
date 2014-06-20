@@ -160,7 +160,6 @@
             this.preloadImages();
         },
         showImage: function (img) {
-            console.log(modal.animate);
             var modal = this.$element,
                 transition = $.support.transition && modal.hasClass('fade'),
                 method = transition ? modal.animate : modal.css,
