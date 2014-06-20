@@ -3,6 +3,13 @@
     margin-top: 0!important;
 }
 
+#gallery a{
+    padding: 5px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
 #modal-gallery .modal-image{
     max-height: 650px;
 }
