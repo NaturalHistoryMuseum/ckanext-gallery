@@ -1,0 +1,9 @@
+  <div id="gallery" data-toggle="modal-gallery" data-target="#modal-gallery">
+    {% for image in images %}
+        <a href="{{ image.url }}" title="{{ image.title }}" data-gallery="gallery" class="gallery-thumbnail">
+            <img src="{{ image.thumbnail or image.url }}" alt="{{ title }}" />
+        </a>
+    {% endfor %}
+  </div>
+
+{% resource 'ckanext-gallery/main' %}

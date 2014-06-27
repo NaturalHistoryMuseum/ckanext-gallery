@@ -6,7 +6,6 @@ import ckan.model as model
 from ckan.common import _, c
 import ckan.lib.navl.dictization_functions as df
 import ckan.logic as logic
-from ckanext.gallery.lib.helpers import thumbnail_url
 from ckanext.datastore.interfaces import IDatastore
 get_action = logic.get_action
 
@@ -37,7 +36,6 @@ class GalleryPlugin(p.SingletonPlugin):
     """
     p.implements(p.IConfigurer)
     p.implements(p.IResourceView, inherit=True)
-    p.implements(p.ITemplateHelpers)
     p.implements(IDatastore)
 
     datastore_fields = []
@@ -115,6 +113,8 @@ class GalleryPlugin(p.SingletonPlugin):
         # TODO: Pagination
 
         image_field = data_dict['resource_view'].get('image_field')
+        title_field = data_dict['resource_view'].get('title_field', None)
+        thumbnail_params = title_field = data_dict['resource_view'].get('title_field', None)
         thumbnail_field = data_dict['resource_view'].get('thumbnail_field')
 
         # We only want to get records that have both the image and thumbnail field populated
@@ -133,12 +133,32 @@ class GalleryPlugin(p.SingletonPlugin):
         context = {'model': model, 'session': model.Session, 'user': c.user or c.author}
         data = toolkit.get_action('datastore_search')(context, params)
 
+        #  Build a list of images
+        images = []
+        for record in data['records']:
+
+            image = record.get(image_field, None)
+
+            # Only add if we have an image
+            if image:
+
+                title = record.get(title_field, None)
+                thumbnail = record.get(thumbnail_field, None)
+
+                # If we have thumbnail params, add them here
+                thumbnail_params = record.get(thumbnail_field, None)
+                if thumbnail and thumbnail_params:
+                    q = '&' if '?' in thumbnail else '?'
+                    thumbnail += q + thumbnail_params
+
+                images.append({
+                    'url': image,
+                    'thumbnail': thumbnail,
+                    'title': title
+                })
+
         return {
-            'records': data['records'],
-            'image_field': image_field,
-            'thumbnail_field': thumbnail_field,
-            'thumbnail_params': data_dict['resource_view'].get('thumbnail_params', None),
-            'title_field': data_dict['resource_view'].get('title_field', None),
+            'images': images,
             'datastore_fields':  self.datastore_fields,
             'defaults': {}
         }
@@ -150,10 +170,3 @@ class GalleryPlugin(p.SingletonPlugin):
 
     def list_datastore_fields(self):
         return [t['value'] for t in self.datastore_fields]
-
-    ## ITemplateHelpers
-    def get_helpers(self):
-        """Add a template helper for formatting thumbnail URLS"""
-        return {
-            'thumbnail_url': thumbnail_url
-        }
