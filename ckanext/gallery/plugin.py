@@ -114,51 +114,65 @@ class GalleryPlugin(p.SingletonPlugin):
 
         image_field = data_dict['resource_view'].get('image_field')
         title_field = data_dict['resource_view'].get('title_field', None)
-        thumbnail_params = title_field = data_dict['resource_view'].get('title_field', None)
-        thumbnail_field = data_dict['resource_view'].get('thumbnail_field')
+        thumbnail_params = data_dict['resource_view'].get('thumbnail_params', None)
+        thumbnail_field = data_dict['resource_view'].get('thumbnail_field', None)
 
-        # We only want to get records that have both the image and thumbnail field populated
-        # So add filters to the datastore search params
-        params = {
-            'resource_id': data_dict['resource']['id'],
-            'limit': 100,
-            'offset': 0,
-            # TODO: This isn't working
-            # 'filters': {
-            #     image_field: IS_NOT_NULL,
-            #     thumbnail_field: IS_NOT_NULL
-            # }
-        }
+        image_list = []
 
-        context = {'model': model, 'session': model.Session, 'user': c.user or c.author}
-        data = toolkit.get_action('datastore_search')(context, params)
+        # Only try and load images, if an image field has been selected
+        if image_field:
 
-        #  Build a list of images
-        images = []
-        for record in data['records']:
+            # We only want to get records that have both the image field populated
+            # So add filters to the datastore search params
+            params = {
+                'resource_id': data_dict['resource']['id'],
+                'limit': 10,
+                'offset': 0,
+                'filters': {
+                    image_field: IS_NOT_NULL
+                }
+            }
 
-            image = record.get(image_field, None)
+            context = {'model': model, 'session': model.Session, 'user': c.user or c.author}
+            data = toolkit.get_action('datastore_search')(context, params)
 
-            # Only add if we have an image
-            if image:
+            for record in data['records']:
 
-                title = record.get(title_field, None)
-                thumbnail = record.get(thumbnail_field, None)
+                images = record.get(image_field, None).split(';')
 
-                # If we have thumbnail params, add them here
-                thumbnail_params = record.get(thumbnail_field, None)
-                if thumbnail and thumbnail_params:
-                    q = '&' if '?' in thumbnail else '?'
-                    thumbnail += q + thumbnail_params
+                # Only add if we have an image
+                if images:
 
-                images.append({
-                    'url': image,
-                    'thumbnail': thumbnail,
-                    'title': title
-                })
+                    title = record.get(title_field, None)
+                    thumbnails = record.get(thumbnail_field, None).split(';')
+
+                    for i, image in enumerate(images):
+
+                        image = image.strip()
+
+                        if thumbnails:
+                            try:
+                                thumbnail = thumbnails[i]
+                            except IndexError:
+                                # If we don't have a thumbnail with the same index
+                                # Use the first thumbnail image
+                                thumbnail = thumbnails[0]
+
+                            thumbnail = thumbnail.strip()
+
+                            # If we have thumbnail params, add them here
+                            if thumbnail_params:
+                                q = '&' if '?' in thumbnail else '?'
+                                thumbnail += q + thumbnail_params
+
+                        image_list.append({
+                            'url': image,
+                            'thumbnail': thumbnail,
+                            'title': title
+                        })
 
         return {
-            'images': images,
+            'images': image_list,
             'datastore_fields':  self.datastore_fields,
             'defaults': {}
         }
