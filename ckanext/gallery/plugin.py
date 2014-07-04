@@ -7,6 +7,7 @@ from ckan.common import _, c
 import ckan.lib.navl.dictization_functions as df
 import ckan.logic as logic
 from ckanext.datastore.interfaces import IDatastore
+from pylons import config
 get_action = logic.get_action
 
 not_empty = p.toolkit.get_validator('not_empty')
@@ -108,6 +109,8 @@ class GalleryPlugin(p.SingletonPlugin):
 
         self.datastore_fields = self._get_datastore_fields(data_dict['resource']['id'])
 
+        field_separator = config.get("ckanext.gallery.field_separator", ';')
+
         # Get the actual data - there's no need to do this client side
         # TODO: Q params
         # TODO: Pagination
@@ -138,13 +141,13 @@ class GalleryPlugin(p.SingletonPlugin):
 
             for record in data['records']:
 
-                images = record.get(image_field, None).split(';')
+                images = record.get(image_field, None).split(field_separator)
 
                 # Only add if we have an image
                 if images:
 
                     title = record.get(title_field, None)
-                    thumbnails = record.get(thumbnail_field, None).split(';')
+                    thumbnails = record.get(thumbnail_field, None).split(field_separator)
 
                     for i, image in enumerate(images):
 
