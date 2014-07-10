@@ -124,7 +124,6 @@ class GalleryPlugin(p.SingletonPlugin):
 
         # Only try and load images, if an image field has been selected
         if image_field:
-
             # We only want to get records that have both the image field populated
             # So add filters to the datastore search params
             params = {
@@ -171,13 +170,16 @@ class GalleryPlugin(p.SingletonPlugin):
                         image_list.append({
                             'url': image,
                             'thumbnail': thumbnail,
-                            'title': title
+                            'title': title,
+                            'record_id': record['_id'],
                         })
 
         return {
             'images': image_list,
             'datastore_fields':  self.datastore_fields,
-            'defaults': {}
+            'defaults': {},
+            'resource_id': data_dict['resource']['id'],
+            'package_name': data_dict['package']['name']
         }
 
     def _get_datastore_fields(self, resource_id):

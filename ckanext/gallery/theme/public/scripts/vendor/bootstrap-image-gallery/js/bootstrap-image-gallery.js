@@ -141,6 +141,7 @@
                 oldImg.remove();
             }, 3000);
             modal.find('.modal-title').text(this.$links[index].title);
+            modal.find('.modal-description').html($(this.$links[index]).data("description"));
             modal.find('.modal-download').prop(
                 'href',
                 download || url
@@ -367,11 +368,15 @@
             originalHide.apply(this, arguments);
         }
     });
+
     $(function () {
         $(document.body).on(
             'click.modal-gallery.data-api',
             '[data-toggle="modal-gallery"]',
             function (e) {
+
+
+
                 var $this = $(this),
                     options = $this.data(),
                     modal = $(options.target),
