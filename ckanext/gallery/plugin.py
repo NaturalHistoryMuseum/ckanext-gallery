@@ -8,7 +8,9 @@ import ckan.lib.navl.dictization_functions as df
 import ckan.logic as logic
 from ckanext.datastore.interfaces import IDatastore
 from pylons import config
+import ckan.lib.helpers as h
 from ckan.common import json, request, _, response
+from pylons import url as _pylons_default_url
 
 get_action = logic.get_action
 
@@ -113,8 +115,9 @@ class GalleryPlugin(p.SingletonPlugin):
         self.datastore_fields = self._get_datastore_fields(data_dict['resource']['id'])
 
         field_separator = config.get("ckanext.gallery.field_separator", ';')
+        records_per_page = config.get("ckanext.gallery.records_per_page", 5)
 
-        print data_dict
+        current_page = request.params.get('page', 1)
 
         # Get the actual data - there's no need to do this client side
         # TODO: Pagination
@@ -128,12 +131,15 @@ class GalleryPlugin(p.SingletonPlugin):
 
         # Only try and load images, if an image field has been selected
         if image_field:
+
+            offset = (int(current_page) - 1) * records_per_page
+
             # We only want to get records that have both the image field populated
             # So add filters to the datastore search params
             params = {
                 'resource_id': data_dict['resource']['id'],
-                'limit': 10,
-                'offset': 0,
+                'limit': records_per_page,
+                'offset': offset,
                 'filters': {
                     image_field: IS_NOT_NULL
                 }
@@ -159,8 +165,6 @@ class GalleryPlugin(p.SingletonPlugin):
             data = toolkit.get_action('datastore_search')(context, params)
 
             for record in data['records']:
-
-                print record
 
                 try:
                     images = record.get(image_field, None).split(field_separator)
@@ -199,12 +203,22 @@ class GalleryPlugin(p.SingletonPlugin):
                                 'record_id': record['_id'],
                             })
 
+
+        page = h.Page(
+            collection=data['records'],
+            page=current_page,
+            url=self.pager_url,
+            items_per_page=records_per_page,
+            item_count=72
+        )
+
         return {
             'images': image_list,
             'datastore_fields':  self.datastore_fields,
             'defaults': {},
             'resource_id': data_dict['resource']['id'],
-            'package_name': data_dict['package']['name']
+            'package_name': data_dict['package']['name'],
+            'page': page
         }
 
     def _get_datastore_fields(self, resource_id):
@@ -214,3 +228,11 @@ class GalleryPlugin(p.SingletonPlugin):
 
     def list_datastore_fields(self):
         return [t['value'] for t in self.datastore_fields]
+
+    def pager_url(self, **kwargs):
+        routes_dict = _pylons_default_url.environ['pylons.routes_dict']
+        view_id = request.params.get('view_id')
+        if view_id:
+            routes_dict['view_id'] = view_id
+        routes_dict.update(kwargs)
+        return h.url_for(**routes_dict)
