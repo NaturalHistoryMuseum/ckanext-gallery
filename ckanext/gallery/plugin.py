@@ -8,6 +8,8 @@ import ckan.lib.navl.dictization_functions as df
 import ckan.logic as logic
 from ckanext.datastore.interfaces import IDatastore
 from pylons import config
+from ckan.common import json, request, _, response
+
 get_action = logic.get_action
 
 not_empty = p.toolkit.get_validator('not_empty')
@@ -62,6 +64,7 @@ class GalleryPlugin(p.SingletonPlugin):
             },
             'icon': 'picture',
             'iframed': False,
+            'filterable': True,
             'preview_enabled': False,
             'full_page_edit': False
         }
@@ -131,14 +134,32 @@ class GalleryPlugin(p.SingletonPlugin):
                 'limit': 10,
                 'offset': 0,
                 'filters': {
-                    image_field: IS_NOT_NULL
+                    # image_field: IS_NOT_NULL
                 }
             }
+
+            # Add filters from request
+            filter_str = request.params.get('filters')
+            if filter_str:
+                for f in filter_str.split('|'):
+                    try:
+                        (name, value) = f.split(':')
+                        params['filters'][name] = value
+
+                    except ValueError:
+                        pass
+
+            # Full text filter
+            fulltext = request.params.get('q')
+            if fulltext:
+                params['q'] = fulltext
 
             context = {'model': model, 'session': model.Session, 'user': c.user or c.author}
             data = toolkit.get_action('datastore_search')(context, params)
 
             for record in data['records']:
+
+                print record
 
                 try:
                     images = record.get(image_field, None).split(field_separator)
