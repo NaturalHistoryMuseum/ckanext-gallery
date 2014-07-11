@@ -77,7 +77,7 @@ class GalleryPlugin(p.SingletonPlugin):
         # First, make sure we don't have any of the 'IS NOT NONE' string filters in the where clause
         # We need to do this here, rather than in datastore_validate_query because the filters have already
         # been processed and removed
-        query_dict['where'] = [where for where in query_dict['where'] if len(where) > 1 and where[1] != IS_NOT_NULL]
+        query_dict['where'] = [where for where in query_dict['where'] if len(where) < 2 or where[1] != IS_NOT_NULL]
 
         # And then add SQL based where clauses
         try:
