@@ -140,39 +140,42 @@ class GalleryPlugin(p.SingletonPlugin):
 
             for record in data['records']:
 
-                images = record.get(image_field, None).split(field_separator)
+                try:
+                    images = record.get(image_field, None).split(field_separator)
+                except AttributeError:
+                    pass
+                else:
+                    # Only add if we have an image
+                    if images:
 
-                # Only add if we have an image
-                if images:
+                        title = record.get(title_field, None)
+                        thumbnails = record.get(thumbnail_field, None).split(field_separator)
 
-                    title = record.get(title_field, None)
-                    thumbnails = record.get(thumbnail_field, None).split(field_separator)
+                        for i, image in enumerate(images):
 
-                    for i, image in enumerate(images):
+                            image = image.strip()
 
-                        image = image.strip()
+                            if thumbnails:
+                                try:
+                                    thumbnail = thumbnails[i]
+                                except IndexError:
+                                    # If we don't have a thumbnail with the same index
+                                    # Use the first thumbnail image
+                                    thumbnail = thumbnails[0]
 
-                        if thumbnails:
-                            try:
-                                thumbnail = thumbnails[i]
-                            except IndexError:
-                                # If we don't have a thumbnail with the same index
-                                # Use the first thumbnail image
-                                thumbnail = thumbnails[0]
+                                thumbnail = thumbnail.strip()
 
-                            thumbnail = thumbnail.strip()
+                                # If we have thumbnail params, add them here
+                                if thumbnail_params:
+                                    q = '&' if '?' in thumbnail else '?'
+                                    thumbnail += q + thumbnail_params
 
-                            # If we have thumbnail params, add them here
-                            if thumbnail_params:
-                                q = '&' if '?' in thumbnail else '?'
-                                thumbnail += q + thumbnail_params
-
-                        image_list.append({
-                            'url': image,
-                            'thumbnail': thumbnail,
-                            'title': title,
-                            'record_id': record['_id'],
-                        })
+                            image_list.append({
+                                'url': image,
+                                'thumbnail': thumbnail,
+                                'title': title,
+                                'record_id': record['_id'],
+                            })
 
         return {
             'images': image_list,
