@@ -114,8 +114,9 @@ class GalleryPlugin(p.SingletonPlugin):
 
         field_separator = config.get("ckanext.gallery.field_separator", ';')
 
+        print data_dict
+
         # Get the actual data - there's no need to do this client side
-        # TODO: Q params
         # TODO: Pagination
 
         image_field = data_dict['resource_view'].get('image_field')
@@ -134,7 +135,7 @@ class GalleryPlugin(p.SingletonPlugin):
                 'limit': 10,
                 'offset': 0,
                 'filters': {
-                    # image_field: IS_NOT_NULL
+                    image_field: IS_NOT_NULL
                 }
             }
 
