@@ -128,6 +128,7 @@ class GalleryPlugin(p.SingletonPlugin):
         thumbnail_field = data_dict['resource_view'].get('thumbnail_field', None)
 
         image_list = []
+        records = []
 
         # Only try and load images, if an image field has been selected
         if image_field:
@@ -163,6 +164,7 @@ class GalleryPlugin(p.SingletonPlugin):
 
             context = {'model': model, 'session': model.Session, 'user': c.user or c.author}
             data = toolkit.get_action('datastore_search')(context, params)
+            records = data['records']
 
             for record in data['records']:
 
@@ -205,7 +207,7 @@ class GalleryPlugin(p.SingletonPlugin):
 
 
         page = h.Page(
-            collection=data['records'],
+            collection=records,
             page=current_page,
             url=self.pager_url,
             items_per_page=records_per_page,
