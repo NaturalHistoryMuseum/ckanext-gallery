@@ -115,12 +115,9 @@ class GalleryPlugin(p.SingletonPlugin):
         self.datastore_fields = self._get_datastore_fields(data_dict['resource']['id'])
 
         field_separator = config.get("ckanext.gallery.field_separator", ';')
-        records_per_page = config.get("ckanext.gallery.records_per_page", 5)
+        records_per_page = config.get("ckanext.gallery.records_per_page", 30)
 
         current_page = request.params.get('page', 1)
-
-        # Get the actual data - there's no need to do this client side
-        # TODO: Pagination
 
         image_field = data_dict['resource_view'].get('image_field')
         title_field = data_dict['resource_view'].get('title_field', None)
@@ -129,6 +126,7 @@ class GalleryPlugin(p.SingletonPlugin):
 
         image_list = []
         records = []
+        item_count = 0
 
         # Only try and load images, if an image field has been selected
         if image_field:
@@ -164,6 +162,8 @@ class GalleryPlugin(p.SingletonPlugin):
 
             context = {'model': model, 'session': model.Session, 'user': c.user or c.author}
             data = toolkit.get_action('datastore_search')(context, params)
+
+            item_count = data.get('total', 0)
             records = data['records']
 
             for record in data['records']:
@@ -202,17 +202,24 @@ class GalleryPlugin(p.SingletonPlugin):
                                 'url': image,
                                 'thumbnail': thumbnail,
                                 'title': title,
-                                'record_id': record['_id'],
+                                'record_id': record['_id']
                             })
 
+        page_params = {
+            'collection':records,
+            'page': current_page,
+            'url': self.pager_url,
+            'items_per_page': records_per_page,
+            'item_count': item_count,
+        }
 
-        page = h.Page(
-            collection=records,
-            page=current_page,
-            url=self.pager_url,
-            items_per_page=records_per_page,
-            item_count=72
-        )
+        # Add filter params to page links
+        for key in ['q', 'filters']:
+            value = request.params.get(key)
+            if value:
+                page_params[key] = value
+
+        page = h.Page(**page_params)
 
         return {
             'images': image_list,

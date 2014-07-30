@@ -2,10 +2,12 @@
 
 {% block page %}
 
-    {% snippet 'gallery/snippets/gallery.html', images=images, package_name=package_name, resource_id=resource_id %}
-    {{ page.pager() }}
-
-    {% include "gallery/snippets/lightbox.html" %}
-
-
+    {% if images %}
+        {% snippet 'gallery/snippets/gallery.html', images=images, package_name=package_name, resource_id=resource_id %}
+        {{ page.pager() }}
+    {% else %}
+        <div class="row">
+            <p>No images found matching these criteria.</p>
+        </div>
+    {% endif %}
 {% endblock %}
