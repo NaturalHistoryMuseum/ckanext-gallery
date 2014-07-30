@@ -1,9 +1,8 @@
 <div id="gallery" data-toggle="modal-gallery" data-target="#modal-gallery">
     <div class="row">
         {% for image in images %}
-            <div class="gallery-image col2 span2">
 
-                {{ image['record_id'] }}
+            <div class="gallery-image col2 span2">
 
                 {# Allow passing in descrtipton to ovveride #}
                 {% if not image.description %}
@@ -19,11 +18,11 @@
                     {% set description = image.description %}
                 {%  endif %}
 
-                <a href="{{ image.url }}" title="{{ image.title if image.title else '' }}" data-gallery="gallery" data-description="{{ description }}" class="gallery-thumbnail">
-                    <img src="{{ image.thumbnail or image.url }}" alt="{{ title }}" />
+                <a href="{{ image.url }}" title="{{ image.modal_title if image.modal_title else '' }}" data-gallery="gallery" data-description="{{ description }}" class="gallery-thumbnail">
+                    <img src="{{ image.thumbnail or image.url }}" alt="{{ image.gallery_title or image.modal_title }}" />
                 </a>
-                {% if image.title %}
-                    <p>{{ image.title }}</p>
+                {% if image.gallery_title %}
+                    <p>{{ image.gallery_title }}</p>
                 {% endif %}
             </div>
         {% endfor %}

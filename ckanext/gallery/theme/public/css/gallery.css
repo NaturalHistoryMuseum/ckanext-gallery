@@ -3,11 +3,26 @@
     margin-top: 0!important;
 }
 
-#gallery a{
-    padding: 5px;
-    border: 1px solid #ccc;
-    display: inline-block;
+#gallery .gallery-image{
+    margin-bottom: 20px;
+}
+
+#gallery .gallery-image a{
     margin-bottom: 5px;
+    display: block;
+    width: 140px;
+    height: 140px;
+    overflow: hidden;
+}
+
+#gallery .gallery-image a img{
+    min-width: 140px;
+    min-height: 140px;
+}
+
+#gallery .gallery-image p{
+    text-align: center;
+    font-size: 11px;
 }
 
 #modal-gallery .modal-image{

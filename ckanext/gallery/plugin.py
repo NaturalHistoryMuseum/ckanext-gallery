@@ -62,7 +62,8 @@ class GalleryPlugin(p.SingletonPlugin):
                 'image_field': [not_empty, in_list(self.list_datastore_fields)],
                 'thumbnail_field': [not_empty, in_list(self.list_datastore_fields)],
                 'thumbnail_params': [],
-                'title_field': [ignore_empty, in_list(self.list_datastore_fields)]
+                'gallery_title_field': [ignore_empty, in_list(self.list_datastore_fields)],
+                'modal_title_field': [ignore_empty, in_list(self.list_datastore_fields)]
             },
             'icon': 'picture',
             'iframed': False,
@@ -120,7 +121,9 @@ class GalleryPlugin(p.SingletonPlugin):
         current_page = request.params.get('page', 1)
 
         image_field = data_dict['resource_view'].get('image_field')
-        title_field = data_dict['resource_view'].get('title_field', None)
+        gallery_title_field = data_dict['resource_view'].get('gallery_title_field', None)
+        modal_title_field = data_dict['resource_view'].get('modal_title_field', None)
+
         thumbnail_params = data_dict['resource_view'].get('thumbnail_params', None)
         thumbnail_field = data_dict['resource_view'].get('thumbnail_field', None)
 
@@ -176,7 +179,8 @@ class GalleryPlugin(p.SingletonPlugin):
                     # Only add if we have an image
                     if images:
 
-                        title = record.get(title_field, None)
+                        gallery_title = record.get(gallery_title_field, None)
+                        modal_title = record.get(modal_title_field, None)
                         thumbnails = record.get(thumbnail_field, None).split(field_separator)
 
                         for i, image in enumerate(images):
@@ -201,7 +205,8 @@ class GalleryPlugin(p.SingletonPlugin):
                             image_list.append({
                                 'url': image,
                                 'thumbnail': thumbnail,
-                                'title': title,
+                                'gallery_title': gallery_title,
+                                'modal_title': modal_title,
                                 'record_id': record['_id']
                             })
 
