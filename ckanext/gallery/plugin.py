@@ -35,13 +35,34 @@ def in_list(list_possible_values):
             raise Invalid('"{0}" is not a valid parameter'.format(data[key]))
     return validate
 
+
+def is_string_field(datastore_fields):
+    '''
+    Validator that checks that the selected field is a string
+
+    :param list_possible_values: function that returns list of possible values
+        for validated field
+    :type possible_values: function
+    '''
+    def validate(key, data, errors, context):
+
+        print datastore_fields
+
+        raise Invalid('"{0}" is not a string field'.format(data[key]))
+
+    return validate
+
+
+
+
+
 class GalleryPlugin(p.SingletonPlugin):
     """
     Gallery plugin
     """
     p.implements(p.IConfigurer)
     p.implements(p.IResourceView, inherit=True)
-    p.implements(IDatastore)
+    p.implements(IDatastore, inherit=True)
 
     datastore_fields = []
 
@@ -59,7 +80,7 @@ class GalleryPlugin(p.SingletonPlugin):
             'name': 'gallery',
             'title': 'Gallery',
             'schema': {
-                'image_field': [not_empty, in_list(self.list_datastore_fields)],
+                'image_field': [not_empty, in_list(self.list_datastore_fields), is_string_field(self.datastore_fields)],
                 'thumbnail_field': [not_empty, in_list(self.list_datastore_fields)],
                 'thumbnail_params': [],
                 'gallery_title_field': [ignore_empty, in_list(self.list_datastore_fields)],
@@ -238,6 +259,9 @@ class GalleryPlugin(p.SingletonPlugin):
     def _get_datastore_fields(self, resource_id):
         data = {'resource_id': resource_id, 'limit': 0}
         fields = toolkit.get_action('datastore_search')({}, data)['fields']
+
+        print fields
+
         return [{'value': f['id'], 'text': f['id']} for f in fields]
 
     def list_datastore_fields(self):
