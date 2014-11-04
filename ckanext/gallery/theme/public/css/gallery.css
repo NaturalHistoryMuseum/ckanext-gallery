@@ -38,3 +38,50 @@
     text-align: center;
     margin-top: 10px;
 }
+
+#modal-gallery div.modal-ui {
+    float: right;
+    margin: 0;
+    padding: 0;
+    height: 32px;
+}
+
+#modal-gallery div.modal-ui:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+#modal-gallery div.modal-ui a {
+    display: none;
+    color: #000;
+    background: #FFF;
+    border-radius: 16px;
+    font-weight: bold;
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+    line-height: 16px;
+    padding: 4px;
+    text-align: center;
+}
+
+#modal-gallery div.modal-ui a.modal-ui-visible {
+    display: inline-block;
+}
+
+#modal-gallery div.modal-ui a:hover {
+    text-decoration: none;
+    background: #EEE;
+}
+
+/* Remove BootStrap gallery prev/next markers */
+#modal-gallery .modal-image:hover:before,
+#modal-gallery .modal-image:hover:after {
+    content: '';
+    background: transparent;
+    display: none;
+    border: 0;
+}
