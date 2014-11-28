@@ -12,9 +12,6 @@
   {{ form.info(_('Extra paramters to append to the thumbnail URL.'), inline=True) }}
 {% endcall %}
 
-
-
-
 {% call form.select('gallery_title_field', label=_('Gallery title field'), options=[None] + datastore_fields, selected=data.gallery_title_field, error=errors.gallery_title_field) %}
   {{ form.info(_('Title field to use in the gallery.'), inline=True) }}
 {% endcall %}
