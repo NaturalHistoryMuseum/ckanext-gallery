@@ -45,15 +45,9 @@ def is_string_field(datastore_fields):
     :type possible_values: function
     '''
     def validate(key, data, errors, context):
-
-        print datastore_fields
-
         raise Invalid('"{0}" is not a string field'.format(data[key]))
 
     return validate
-
-
-
 
 
 class GalleryPlugin(p.SingletonPlugin):
