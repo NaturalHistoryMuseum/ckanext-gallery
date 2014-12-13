@@ -44,7 +44,7 @@
     padding: 0;
     height: 32px;
     position: absolute;
-    bottom: 15px;
+    bottom: 10px;
     left: 50%;
 }
 
@@ -60,15 +60,15 @@
     display: none;
     color: #000;
     background: #FFF;
-    border-radius: 16px;
+    border-radius: 13px;
     font-weight: bold;
-    font-size: 16px;
-    height: 16px;
-    width: 16px;
-    line-height: 12px;
-    padding: 4px;
+    font-size: 13px;
+    height: 13px;
+    width: 13px;
+    line-height: 10px;
+    padding: 3px;
     text-align: center;
-    border: 3px solid #228900 !important;
+    border: 2px solid #228900 !important;
     color: #228900;
     text-decoration: none!important;
 }
