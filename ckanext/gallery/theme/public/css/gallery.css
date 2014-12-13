@@ -40,10 +40,12 @@
 }
 
 #modal-gallery div.modal-ui {
-    float: right;
-    margin: 0;
+    margin: 0 0 0 -100px;
     padding: 0;
     height: 32px;
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
 }
 
 #modal-gallery div.modal-ui:after {
@@ -63,9 +65,12 @@
     font-size: 16px;
     height: 16px;
     width: 16px;
-    line-height: 16px;
+    line-height: 12px;
     padding: 4px;
     text-align: center;
+    border: 3px solid #228900 !important;
+    color: #228900;
+    text-decoration: none!important;
 }
 
 #modal-gallery div.modal-ui a.modal-ui-visible {
