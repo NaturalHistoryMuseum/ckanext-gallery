@@ -21,6 +21,7 @@ setup(
 	entry_points=\
 	"""
         [ckan.plugins]
-            gallery = ckanext.gallery.plugin:GalleryPlugin
+            gallery = ckanext.gallery.plugins.gallery:GalleryPlugin
+            gallery_image = ckanext.gallery.plugins.image:GalleryImagePlugin
 	""",
 )

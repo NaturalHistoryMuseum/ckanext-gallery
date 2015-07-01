@@ -1,30 +1,27 @@
 <div id="gallery" data-toggle="modal-gallery" data-target="#modal-gallery">
-    <div class="row">
+    <div class="js-masonry" data-masonry-options='{ "itemSelector": ".item", "columnWidth": 80 }'>
         {% for image in images %}
+            <div class="gallery-image item">
+                <img src="{{ image.thumbnail or image.url }}" alt="{{ image.title }}" />
 
-            <div class="gallery-image col2 span2">
-
-                {# Allow passing in descrtipton to ovveride #}
-                {% if not image.description %}
-
-                    {# Check we have package_name and resource_id - these are set up in template variables
-                    for the main gallery view, but this snippet can be used elsewhere #}
-                    {% if package_name and resource_id %}
-                        {% set url = h.url_for(controller='ckanext.nhm.controllers.record:RecordController', action='view', package_name=package_name, resource_id=resource_id, record_id=image['record_id']) %}
-                        {% set description = "<a href='%s'>View record</a>" % url %}
+                {% if image.link %}
+                    {% if image.description %}
+                        {% set description = "%s<br /><a href='%s'>View record</a>" % (image.description, image.link) %}
+                    {% else %}
+                        {% set description = "<a href='%s'>View record</a>" % image.link %}
                     {% endif %}
-
                 {% else %}
                     {% set description = image.description %}
-                {%  endif %}
-
-                <a href="{{ image.url }}" title="{{ image.modal_title if image.modal_title else '' }}" data-gallery="gallery" data-description="{{ description }}" class="gallery-thumbnail">
-                    <img src="{{ image.thumbnail or image.url }}" alt="{{ image.gallery_title or image.modal_title }}" />
-                </a>
-                {% if image.gallery_title %}
-                    <p>{{ image.gallery_title }}</p>
                 {% endif %}
+
+                <!--<a href="{{ image.url }}" title="{{ image.modal_title or image.title }}" data-gallery="gallery" data-description="{{ description }}" class="gallery-thumbnail item">-->
+                    <!--<img src="{{ image.thumbnail or image.url }}" alt="{{ image.title }}" />-->
+                <!--</a>-->
+                <!--{% if has_title %}-->
+                    <!--<p>{{ image.title }}</p>-->
+                <!--{% endif %}-->
             </div>
+
         {% endfor %}
     </div>
   </div>

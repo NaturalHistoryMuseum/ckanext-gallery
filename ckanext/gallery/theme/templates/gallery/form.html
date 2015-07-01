@@ -4,18 +4,10 @@
   {{ form.info(_('Image field to use in the gallery.'), inline=True) }}
 {% endcall %}
 
-{% call form.select('thumbnail_field', label=_('Thumbnail field'), options=datastore_fields, selected=data.thumbnail_field, error=errors.thumbnail_field, is_required=true) %}
-  {{ form.info(_('Thumbnail field to use in the gallery.'), inline=True) }}
+{% call form.select('image_plugin', label=_('Image field type'), options=image_plugins, selected=data.image_plugin, error=errors.image_plugin, is_required=true) %}
+  {{ form.info(_('Image type to use in the gallery.'), inline=True) }}
 {% endcall %}
 
-{% call form.input('thumbnail_params', label=_('Thumbnail parameters'), value=data.thumbnail_params, error=errors.thumbnail_params) %}
-  {{ form.info(_('Extra paramters to append to the thumbnail URL.'), inline=True) }}
-{% endcall %}
-
-{% call form.select('gallery_title_field', label=_('Gallery title field'), options=[None] + datastore_fields, selected=data.gallery_title_field, error=errors.gallery_title_field) %}
+{% call form.select('image_title', label=_('Image title field'), options=[None] + datastore_fields, selected=data.image_title, error=errors.image_title) %}
   {{ form.info(_('Title field to use in the gallery.'), inline=True) }}
-{% endcall %}
-
-{% call form.select('modal_title_field', label=_('Modal title field'), options=[None] + datastore_fields, selected=data.modal_title_field, error=errors.modal_title_field) %}
-  {{ form.info(_('Title field to use in the modal image popup.'), inline=True) }}
 {% endcall %}

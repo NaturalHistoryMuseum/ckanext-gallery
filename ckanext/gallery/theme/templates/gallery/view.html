@@ -3,7 +3,7 @@
 {% block page %}
 
     {% if images %}
-        {% snippet 'gallery/snippets/gallery.html', images=images, package_name=package_name, resource_id=resource_id %}
+        {% snippet 'gallery/snippets/gallery.html', images=images, package_name=package_name, resource_id=resource_id, has_title=has_title %}
         {{ page.pager() }}
     {% else %}
         <div class="row">

@@ -1,0 +1,6 @@
+{
+    "name": "CKAN Gallery Extension",
+    "dependencies": {
+        "masonry": "latest"
+    }
+}
