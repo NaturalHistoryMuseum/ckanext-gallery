@@ -1,3 +1,63 @@
+#gallery .gallery-image {
+  text-align: center;
+  height: 210px;
+  overflow: hidden; }
+  #gallery .gallery-image a {
+    display: block;
+    padding: 10px; }
+    #gallery .gallery-image a img {
+      max-height: 140px; }
+  #gallery .gallery-image p {
+    font-size: 11px;
+    min-height: 30px;
+    margin-bottom: 0;
+    line-height: 14px; }
+    #gallery .gallery-image p span {
+      width: 180px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: inline-block;
+      text-align: center; }
 
+#modal-gallery {
+  margin-top: 0 !important; }
+  #modal-gallery div.modal-ui {
+    margin: 0 0 0 -80px;
+    padding: 0;
+    height: 32px;
+    position: absolute;
+    bottom: 10px;
+    left: 50%; }
+    #modal-gallery div.modal-ui:after {
+      content: ".";
+      display: block;
+      height: 0;
+      clear: both;
+      visibility: hidden; }
+    #modal-gallery div.modal-ui a {
+      display: none;
+      color: #000;
+      background: #fff;
+      border-radius: 13px;
+      font-weight: bold;
+      font-size: 13px;
+      height: 13px;
+      width: 13px;
+      line-height: 10px;
+      padding: 3px;
+      text-align: center;
+      border: 2px solid #228900 !important;
+      color: #228900;
+      text-decoration: none !important; }
+      #modal-gallery div.modal-ui a.modal-ui-visible {
+        display: inline-block; }
+      #modal-gallery div.modal-ui a:hover {
+        text-decoration: none;
+        background: #eee; }
+
+.modal-description {
+  text-align: center;
+  margin-top: 10px; }
 
 /*# sourceMappingURL=gallery.css.map */

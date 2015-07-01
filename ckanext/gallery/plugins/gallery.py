@@ -1,7 +1,5 @@
-import re
 import copy
 import ckan.plugins as p
-from ckan.common import json
 import ckan.plugins.toolkit as toolkit
 import ckan.model as model
 from ckan.common import _, c
@@ -10,10 +8,10 @@ import ckan.logic as logic
 from ckanext.datastore.interfaces import IDatastore
 from pylons import config
 import ckan.lib.helpers as h
-from ckan.common import json, request, _, response
+from ckan.common import request
 from pylons import url as _pylons_default_url
 
-from ckanext.gallery.logic.validators import is_datastore_field, is_image_field
+from ckanext.gallery.logic.validators import is_datastore_field
 from ckanext.gallery.plugins.interfaces import IGalleryImage
 from ckanext.gallery.lib.helpers import get_datastore_fields
 
@@ -99,7 +97,7 @@ class GalleryPlugin(p.SingletonPlugin):
     def setup_template_variables(self, context, data_dict):
         """Setup variables available to templates"""
 
-        records_per_page = config.get("ckanext.gallery.records_per_page", 30)
+        records_per_page = config.get("ckanext.gallery.records_per_page", 32)
         current_page = request.params.get('page', 1)
         image_list = []
 
@@ -124,7 +122,7 @@ class GalleryPlugin(p.SingletonPlugin):
         tpl_variables = {
             'images': image_list,
             'datastore_fields': [{'value': f['id'], 'text': f['id']} for f in datastore_fields],
-            'image_plugins': [{'value': f['plugin'], 'text': f['title']} for f in image_plugins],
+            'image_plugins': [{'value': f['plugin'].name, 'text': f['title']} for f in image_plugins],
             'defaults': {},
             'resource_id': data_dict['resource']['id'],
             'package_name': data_dict['package']['name'],
@@ -165,21 +163,22 @@ class GalleryPlugin(p.SingletonPlugin):
             data = toolkit.get_action('datastore_search')(context, params)
             item_count = data.get('total', 0)
             # Get the selected gallery image plugin
-            plugin = p.get_plugin('gallery_image')
-            for record in data['records']:
-                image_title = record.get(image_title_field, "")
-                image_defaults = {
-                    'title': image_title,
-                    'record_id': record['_id'],
-                    'description': ''
-                }
-                images = plugin.get_images(record.get(image_field, None), record, data_dict)
-                for image in images:
-                    image_default_copy = copy.copy(image_defaults)
-                    # Merge in the plugin image settings to the default image
-                    # Using an copy so the defaults do not change for multiple images
-                    image_default_copy.update(image)
-                    image_list.append(image_default_copy)
+            plugin = p.get_plugin(image_plugin)
+            if plugin:
+                for record in data['records']:
+                    image_title = record.get(image_title_field, "")
+                    image_defaults = {
+                        'title': image_title,
+                        'record_id': record['_id'],
+                        'description': ''
+                    }
+                    images = plugin.get_images(record.get(image_field, None), record, data_dict)
+                    for image in images:
+                        image_default_copy = copy.copy(image_defaults)
+                        # Merge in the plugin image settings to the default image
+                        # Using an copy so the defaults do not change for multiple images
+                        image_default_copy.update(image)
+                        image_list.append(image_default_copy)
 
             page_params = {
                 'collection': data['records'],

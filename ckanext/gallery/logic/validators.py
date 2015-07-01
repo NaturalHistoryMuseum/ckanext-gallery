@@ -26,32 +26,3 @@ def is_datastore_field(value, context):
             return value
     raise Invalid(_('Field {0} not in datastore'.format(value)))
 
-
-def is_image_field():
-    '''
-
-
-
-    :param list_possible_values: function that returns list of possible values
-        for validated field
-    :type possible_values: function
-    '''
-    def validate(key, data, errors, context):
-
-        # print key
-        # print data
-
-        # for f in context:
-        #
-        #
-        # print context
-
-        # print data[key]
-
-        # print datastore_fields
-
-
-
-        raise Invalid('"{0}" is not a string field'.format(data[key]))
-
-    return validate

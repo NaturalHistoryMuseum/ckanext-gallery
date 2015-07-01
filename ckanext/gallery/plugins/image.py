@@ -35,7 +35,7 @@ class GalleryImagePlugin(p.SingletonPlugin):
         # Field value just contains the URL
         return [
             {
-                'url': field_value.replace('preview', 'thumbnail')
+                'url': field_value
             }
         ]
 
