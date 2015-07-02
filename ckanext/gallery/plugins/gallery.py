@@ -58,26 +58,6 @@ class GalleryPlugin(p.SingletonPlugin):
             'full_page_edit': False
         }
 
-    # IDatastore
-    def datastore_search(self, context, data_dict, all_field_ids, query_dict):
-        clauses = []
-        # First, make sure we don't have any of the 'IS NOT NONE' string filters in the where clause
-        # We need to do this here, rather than in datastore_validate_query because the filters have already
-        # been processed and removed
-        query_dict['where'] = [where for where in query_dict['where'] if len(where) < 2 or where[1] != IS_NOT_NULL]
-
-        # And then add SQL based where clauses
-        try:
-            for field_name, value in data_dict['filters'].items():
-                if value == IS_NOT_NULL:
-                    clauses.append(('"%s" %s' % (field_name, IS_NOT_NULL), ))
-                    pass
-                query_dict['where'] += clauses
-        except KeyError:
-            pass
-
-        return query_dict
-
     def datastore_validate(self, context, data_dict, all_field_ids):
         return data_dict
 
@@ -138,20 +118,18 @@ class GalleryPlugin(p.SingletonPlugin):
                 'resource_id': data_dict['resource']['id'],
                 'limit': records_per_page,
                 'offset': offset,
-                # 'filters': {
-                #     image_field: IS_NOT_NULL
-                # },
-                # 'sort': '_id'
+                'filters': {
+                    '_has_image': ['true']
+                },
+                'sort': '_id'
             }
 
             # Try and use the solr search if it exists
-            # try:
-            #     search_action = toolkit.get_action('datastore_solr_search')
-            # # Otherwise fallback to default
-            # except KeyError:
-            #     search_action = toolkit.get_action('datastore_search')
-            #
-            # print search_action
+            try:
+                search_action = toolkit.get_action('datastore_solr_search')
+            # Otherwise fallback to default
+            except KeyError:
+                search_action = toolkit.get_action('datastore_search')
 
             # Add filters from request
             filter_str = request.params.get('filters')
@@ -169,7 +147,7 @@ class GalleryPlugin(p.SingletonPlugin):
                 params['q'] = fulltext
 
             context = {'model': model, 'session': model.Session, 'user': c.user or c.author}
-            data = toolkit.get_action('datastore_search')(context, params)
+            data = search_action(context, params)
             item_count = data.get('total', 0)
             # Get the selected gallery image plugin
             plugin = p.get_plugin(image_plugin)
