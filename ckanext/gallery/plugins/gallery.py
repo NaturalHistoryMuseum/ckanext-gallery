@@ -119,6 +119,8 @@ class GalleryPlugin(p.SingletonPlugin):
                 'limit': records_per_page,
                 'offset': offset,
                 'filters': {
+                    # TODO - This means the module will only work with NHM extension
+                    # Need to copy across the NHM code that handles this
                     '_has_image': ['true']
                 },
                 'sort': '_id'
