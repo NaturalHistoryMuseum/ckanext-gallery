@@ -138,11 +138,20 @@ class GalleryPlugin(p.SingletonPlugin):
                 'resource_id': data_dict['resource']['id'],
                 'limit': records_per_page,
                 'offset': offset,
-                'filters': {
-                    image_field: IS_NOT_NULL
-                },
-                'sort': '_id'
+                # 'filters': {
+                #     image_field: IS_NOT_NULL
+                # },
+                # 'sort': '_id'
             }
+
+            # Try and use the solr search if it exists
+            # try:
+            #     search_action = toolkit.get_action('datastore_solr_search')
+            # # Otherwise fallback to default
+            # except KeyError:
+            #     search_action = toolkit.get_action('datastore_search')
+            #
+            # print search_action
 
             # Add filters from request
             filter_str = request.params.get('filters')
@@ -172,13 +181,15 @@ class GalleryPlugin(p.SingletonPlugin):
                         'record_id': record['_id'],
                         'description': ''
                     }
-                    images = plugin.get_images(record.get(image_field, None), record, data_dict)
-                    for image in images:
-                        image_default_copy = copy.copy(image_defaults)
-                        # Merge in the plugin image settings to the default image
-                        # Using an copy so the defaults do not change for multiple images
-                        image_default_copy.update(image)
-                        image_list.append(image_default_copy)
+                    field_value = record.get(image_field, None)
+                    if field_value:
+                        images = plugin.get_images(field_value, record, data_dict)
+                        for image in images:
+                            image_default_copy = copy.copy(image_defaults)
+                            # Merge in the plugin image settings to the default image
+                            # Using an copy so the defaults do not change for multiple images
+                            image_default_copy.update(image)
+                            image_list.append(image_default_copy)
 
             page_params = {
                 'collection': data['records'],
