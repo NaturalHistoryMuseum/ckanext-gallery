@@ -1,4 +1,5 @@
 import copy
+import urllib
 import ckan.plugins as p
 import ckan.plugins.toolkit as toolkit
 import ckan.model as model
@@ -74,6 +75,17 @@ class GalleryPlugin(p.SingletonPlugin):
             return True
         return False
 
+    def _get_request_filters(self):
+        """Return a dict representing the filters of the current request"""
+        filters = {}
+        for f in urllib.unquote(request.params.get('filters', '')).split('|'):
+            if f:
+                (k, v) = f.split(':', 1)
+                if k not in filters:
+                    filters[k] = []
+                filters[k].append(v)
+        return filters
+
     def setup_template_variables(self, context, data_dict):
         """Setup variables available to templates"""
 
@@ -114,40 +126,28 @@ class GalleryPlugin(p.SingletonPlugin):
             offset = (int(current_page) - 1) * records_per_page
             # We only want to get records that have both the image field populated
             # So add filters to the datastore search params
+            filters = self._get_request_filters()
+            # TODO - This means the module will only work with NHM extension
+            # Need to copy across the NHM code that handles this
+            filters['_has_image'] = ['true']
             params = {
                 'resource_id': data_dict['resource']['id'],
                 'limit': records_per_page,
                 'offset': offset,
-                'filters': {
-                    # TODO - This means the module will only work with NHM extension
-                    # Need to copy across the NHM code that handles this
-                    '_has_image': ['true']
-                },
+                'filters': filters,
                 'sort': '_id'
             }
-
+            # Full text filter
+            fulltext = request.params.get('q')
+            if fulltext:
+                params['q'] = fulltext
             # Try and use the solr search if it exists
             try:
                 search_action = toolkit.get_action('datastore_solr_search')
             # Otherwise fallback to default
             except KeyError:
                 search_action = toolkit.get_action('datastore_search')
-
-            # Add filters from request
-            filter_str = request.params.get('filters')
-            if filter_str:
-                for f in filter_str.split('|'):
-                    try:
-                        (name, value) = f.split(':')
-                        params['filters'][name] = value
-                    except ValueError:
-                        pass
-
-            # Full text filter
-            fulltext = request.params.get('q')
-            if fulltext:
-                params['q'] = fulltext
-
+            # Perform the actual search
             context = {'model': model, 'session': model.Session, 'user': c.user or c.author}
             data = search_action(context, params)
             item_count = data.get('total', 0)
