@@ -137,7 +137,7 @@ class GalleryPlugin(p.SingletonPlugin):
                 'filters': filters,
                 'sort': '_id'
             }
-            # Full text filter
+            # Add the full text filter
             fulltext = request.params.get('q')
             if fulltext:
                 params['q'] = fulltext
