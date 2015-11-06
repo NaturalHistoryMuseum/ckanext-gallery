@@ -127,9 +127,10 @@ class GalleryPlugin(p.SingletonPlugin):
             # We only want to get records that have both the image field populated
             # So add filters to the datastore search params
             filters = self._get_request_filters()
-            # TODO - This means the module will only work with NHM extension
-            # Need to copy across the NHM code that handles this
-            filters['_has_image'] = ['true']
+            # TODO: copy across the NHM code that handles this
+            if data_dict['resource']['format'].lower() == 'dwc':
+                filters['_has_image'] = ['true']
+
             params = {
                 'resource_id': data_dict['resource']['id'],
                 'limit': records_per_page,
