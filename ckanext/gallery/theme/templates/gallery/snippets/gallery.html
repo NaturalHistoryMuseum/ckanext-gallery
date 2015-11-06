@@ -1,31 +1,16 @@
-<div id="gallery" data-toggle="modal-gallery" data-target="#modal-gallery">
+<div id="gallery" data-module="gallery">
     <div class="row">
         {% for image in images %}
             <div class="col2 span3">
                 <div class="gallery-image">
-
-                    {% if image.link %}
-                        {% if image.description %}
-                            {% set description = "%s<br /><a href='%s'>View record</a>" % (image.description, image.link) %}
-                        {% else %}
-                            {% set description = "<a href='%s'>View record</a>" % image.link %}
-                        {% endif %}
-                    {% else %}
-                        {% set description = image.description %}
-                    {% endif %}
-
-                    <a href="{{ image.url }}" title="{{ image.modal_title or image.title }}" data-gallery="gallery" data-description="{{ description }}">
+                    <a onclick="return false;" href="{{ image.url }}" title="{{ image.modal_title or image.title }}" data-link="{{ image.link }}" data-copyright="{{ image.copyright }}">
                         <img src="{{ image.thumbnail or image.url }}" alt="{{ image.title }}" />
                     </a>
-                    {% if has_title %}
-                        <p>{{ image.title }}</p>
-                    {% endif %}
                 </div>
             </div>
-
         {% endfor %}
     </div>
   </div>
 
-{% resource 'ckanext-gallery/main' %}
+{% resource 'ckanext-gallery/gallery' %}
 {% include "gallery/snippets/lightbox.html" %}

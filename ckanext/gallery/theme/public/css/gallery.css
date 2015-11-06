@@ -1,3 +1,41 @@
+#blueimp-gallery .gallery-control {
+  position: absolute;
+  z-index: 700;
+  background: #131313;
+  left: 20px;
+  color: #797979;
+  cursor: pointer;
+  border-radius: 40px;
+  border: 2px solid #797979;
+  height: 40px;
+  width: 40px;
+  text-align: center; }
+  #blueimp-gallery .gallery-control:hover {
+    text-decoration: none; }
+  #blueimp-gallery .gallery-control i {
+    margin-top: 11px;
+    font-size: 16px;
+    display: inline-block; }
+#blueimp-gallery .gallery-control-download {
+  bottom: 20px; }
+#blueimp-gallery .gallery-control-link {
+  bottom: 80px;
+  display: none; }
+#blueimp-gallery .copyright {
+  z-index: 699;
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  bottom: 0;
+  padding: 5px 0;
+  text-align: center;
+  font-size: 11px;
+  color: #fff;
+  width: 100%;
+  margin: 0;
+  line-height: 1.6em; }
+  #blueimp-gallery .copyright a {
+    color: #ccc; }
+
 #gallery .gallery-image {
   text-align: center;
   height: 210px;
@@ -20,44 +58,28 @@
       display: inline-block;
       text-align: center; }
 
-#modal-gallery {
-  margin-top: 0 !important; }
-  #modal-gallery div.modal-ui {
-    margin: 0 0 0 -80px;
-    padding: 0;
-    height: 32px;
-    position: absolute;
-    bottom: 10px;
-    left: 50%; }
-    #modal-gallery div.modal-ui:after {
-      content: ".";
-      display: block;
-      height: 0;
-      clear: both;
-      visibility: hidden; }
-    #modal-gallery div.modal-ui a {
-      display: none;
-      color: #000;
-      background: #fff;
-      border-radius: 13px;
-      font-weight: bold;
-      font-size: 13px;
-      height: 13px;
-      width: 13px;
-      line-height: 10px;
-      padding: 3px;
-      text-align: center;
-      border: 2px solid #228900 !important;
-      color: #228900;
-      text-decoration: none !important; }
-      #modal-gallery div.modal-ui a.modal-ui-visible {
-        display: inline-block; }
-      #modal-gallery div.modal-ui a:hover {
-        text-decoration: none;
-        background: #eee; }
+.blueimp-gallery {
+  z-index: 500 !important; }
 
-.modal-description {
-  text-align: center;
-  margin-top: 10px; }
+.download-tooltip {
+  z-index: 1000;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(0, 0, 0, 0.2);
+  border: 0;
+  border-radius: 3px; }
+  .download-tooltip ul {
+    margin: 0; }
+    .download-tooltip ul li {
+      list-style: none; }
+      .download-tooltip ul li a {
+        color: #212124;
+        font-size: 14px;
+        font-weight: 400;
+        text-decoration: none;
+        display: block;
+        padding: 0 5px;
+        line-height: 24px; }
+        .download-tooltip ul li a:hover {
+          background: #f2f2f2; }
 
 /*# sourceMappingURL=gallery.css.map */

@@ -1,83 +1,115 @@
-//colors
-$black: #000;
-$white: #fff;
-$color_bilbao_approx: #228900;
-$color_gallery_approx: #eee;
+#blueimp-gallery {
 
+  .gallery-control{
+    position: absolute;
+    z-index: 700;
+    background: #131313;
+    left: 20px;
+    color: #797979;
+    cursor: pointer;
+    border-radius: 40px;
+    border: 2px solid #797979;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    &:hover {
+      text-decoration: none
+    }
+    i {
+      margin-top: 11px;
+      font-size: 16px;
+      display: inline-block;
+    }
+  }
 
+  .gallery-control-download {
+    bottom: 20px;
+  }
+
+  .gallery-control-link{
+    bottom: 80px;
+    display: none;
+  }
+
+  .copyright {
+    z-index: 699;
+    background: rgba(0,0,0, 0.5);
+    position: absolute;
+    bottom: 0;
+    padding: 5px 0;
+    text-align: center;
+    font-size: 11px;
+    color: #fff;
+    width: 100%;
+    margin: 0;
+    line-height: 1.6em;
+    a{
+      color: #ccc;
+    }
+  }
+
+}
 
 #gallery .gallery-image {
-    text-align: center;
-    height: 210px;
-    overflow: hidden;
-	a {
-		display: block;
-        padding: 10px;
-		img {
-			max-height: 140px;
-		}
-	}
-	p {
-		font-size: 11px;
-        min-height: 30px;
-        margin-bottom: 0;
-        line-height: 14px;
+  text-align: center;
+  height: 210px;
+  overflow: hidden;
+  a {
+    display: block;
+    padding: 10px;
+    img {
+      max-height: 140px;
+    }
+  }
+  p {
+    font-size: 11px;
+    min-height: 30px;
+    margin-bottom: 0;
+    line-height: 14px;
 
-        span{
-          width: 180px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: inline-block;
-          text-align: center;
+    span {
+      width: 180px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: inline-block;
+      text-align: center;
+    }
+
+  }
+}
+
+.blueimp-gallery {
+  z-index: 500 !important;
+}
+
+.download-tooltip {
+  z-index: 1000;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(0, 0, 0, 0.2);
+  border: 0;
+  border-radius: 3px;
+
+  ul {
+    margin: 0;
+    li {
+      list-style: none;
+      a {
+        color: #212124;
+        font-size: 14px;
+        font-weight: 400;
+        text-decoration: none;
+        display: block;
+        padding: 0 5px;
+        line-height: 24px;
+
+        &:hover{
+          background: #f2f2f2;
         }
 
-	}
+      }
+    }
+  }
 }
 
-#modal-gallery {
-	margin-top: 0!important;
-	div.modal-ui {
-		margin: 0 0 0 -80px;
-		padding: 0;
-		height: 32px;
-		position: absolute;
-		bottom: 10px;
-		left: 50%;
-		&:after {
-			content: ".";
-			display: block;
-			height: 0;
-			clear: both;
-			visibility: hidden;
-		}
-		a {
-			display: none;
-			color: $black;
-			background: $white;
-			border-radius: 13px;
-			font-weight: bold;
-			font-size: 13px;
-			height: 13px;
-			width: 13px;
-			line-height: 10px;
-			padding: 3px;
-			text-align: center;
-			border: 2px solid $color_bilbao_approx !important;
-			color: $color_bilbao_approx;
-			text-decoration: none!important;
-			&.modal-ui-visible {
-				display: inline-block;
-			}
-			&:hover {
-				text-decoration: none;
-				background: $color_gallery_approx;
-			}
-		}
-	}
-}
 
-.modal-description {
-	text-align: center;
-	margin-top: 10px;
-}
