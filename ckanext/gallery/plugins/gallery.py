@@ -159,6 +159,7 @@ class GalleryPlugin(p.SingletonPlugin):
                     image_defaults = {
                         'title': image_title,
                         'record_id': record['_id'],
+                        'resource_id': data_dict['resource']['id']
                     }
                     field_value = record.get(image_field, None)
                     if field_value:
