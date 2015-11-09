@@ -8,32 +8,24 @@ ckan.module('gallery', function (jQuery, _) {
 
   return {
     initialize: function () {
-    self = this
-    self.images = []
-    $("a", this.el).each(function(i) {
-        self.images.push({
-            title: $(this).attr("title"),
-            href: $(this).attr("href"),
-            link: $(this).data("link"),
-            copyright: $(this).data("copyright")
-        })
-        $(this).data("index", i)
-        $(this).on('click', jQuery.proxy(self._openLightbox));
-    });
+        self = this
+        $("a", this.el).each(function(i) {
+            $(this).data("index", i)
+            $(this).on('click', jQuery.proxy(self._openLightbox));
+        });
 
-    $('#download-tooltip').tooltip({
-        position: { of: '#blueimp-gallery a.gallery-control-download', my: 'left+60 center', at: 'left center' },
-        tooltipClass: "download-tooltip"
-    });
+        $('#download-tooltip').tooltip({
+            position: { of: '#blueimp-gallery a.gallery-control-download', my: 'left+60 center', at: 'left center' },
+            tooltipClass: "download-tooltip"
+        });
 
-    $('#blueimp-gallery a.gallery-control-download').on('click', jQuery.proxy(self._showDownloadTooltip));
-    // Hide the tooltip if the gallery is clicked
-    $('#blueimp-gallery').on('click', jQuery.proxy(self._hideDownloadTooltip));
-
+        $('#blueimp-gallery a.gallery-control-download').on('click', jQuery.proxy(self._showDownloadTooltip));
+        // Hide the tooltip if the gallery is clicked
+        $('#blueimp-gallery').on('click', jQuery.proxy(self._hideDownloadTooltip));
     },
-    _getCurrentImage: function (e) {
+    _getCurrentImage: function () {
         var pos = self.gallery.getIndex();
-        return self.images[pos]
+        return self.options.images[pos]
     },
     _openLightbox: function (e) {
         var options = {
@@ -45,20 +37,20 @@ ckan.module('gallery', function (jQuery, _) {
                 self._updateViewLink()
             }
         }
-        self.gallery = blueimp.Gallery(self.images, options)
+        self.gallery = blueimp.Gallery(self.options.images, options)
         e.stopPropagation();
         return false;
     },
     _showDownloadTooltip: function(e){
-        $('#download-tooltip').tooltip( "option", "content", self._getTooltipText()).tooltip('open');
+        var image = self._getCurrentImage()
+        $('#download-tooltip').data("image", image).tooltip( "option", "content", self._getTooltipText(image)).tooltip('open');
         e.stopPropagation();
         return false;
     },
     _hideDownloadTooltip: function(e){
         $('#download-tooltip').tooltip('close');
     },
-    _getTooltipText: function(e){
-        var image = self._getCurrentImage()
+    _getTooltipText: function(image){
         // Get the HTML image 0 we then know the dimensions
         $img = $('#blueimp-gallery img[src="' + image.href + '"]')
         return '<ul><li><a href="' + image.href + '" download>Download image (' + $img[0].naturalHeight + '&times;' + $img[0].naturalWidth + ')</a></li></ul>'
@@ -76,6 +68,9 @@ ckan.module('gallery', function (jQuery, _) {
         }else{
             $('#blueimp-gallery .gallery-control-link').hide()
         }
+    },
+    options: {
+        images: []
     }
   };
 });

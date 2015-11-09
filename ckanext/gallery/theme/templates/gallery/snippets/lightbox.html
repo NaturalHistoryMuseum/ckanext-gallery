@@ -1,11 +1,13 @@
-<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
-    <div class="slides"></div>
-    <h3 class="title"></h3>
-    <a class="prev">‹</a>
-    <a class="next">›</a>
-    <a class="close">×</a>
-    <a class="gallery-control gallery-control-download"><i class="icon-download-alt" aria-hidden="true"></i></a>
-    <a class="gallery-control gallery-control-link" title="View record"><i class="icon-arrow-right" aria-hidden="true"></i></a>
-    <p class="copyright"></p>
-    <div id="download-tooltip" title="Download"></div>
-</div>
+{% block lightbox %}
+    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+        <div class="slides"></div>
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="gallery-control gallery-control-download" title="Download image"><i class="icon-download-alt" aria-hidden="true"></i></a>
+        <a class="gallery-control gallery-control-link" title="View record"><i class="icon-arrow-right" aria-hidden="true"></i></a>
+        <p class="copyright"></p>
+        <div id="download-tooltip" title="Download"></div>
+    </div>
+{% endblock %}

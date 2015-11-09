@@ -117,8 +117,7 @@ class GalleryPlugin(p.SingletonPlugin):
             'image_plugins': [{'value': f['plugin'].name, 'text': f['title']} for f in image_plugins],
             'defaults': {},
             'resource_id': data_dict['resource']['id'],
-            'package_name': data_dict['package']['name'],
-            'has_title': True if image_title_field else False
+            'package_name': data_dict['package']['name']
         }
         # Load the images
         # Only try and load images, if an image field has been selected
@@ -127,7 +126,7 @@ class GalleryPlugin(p.SingletonPlugin):
             # We only want to get records that have both the image field populated
             # So add filters to the datastore search params
             filters = self._get_request_filters()
-            # TODO: copy across the NHM code that handles this
+            # TODO: copy across to NHM code that handles this
             if data_dict['resource']['format'].lower() == 'dwc':
                 filters['_has_image'] = ['true']
 
@@ -160,7 +159,6 @@ class GalleryPlugin(p.SingletonPlugin):
                     image_defaults = {
                         'title': image_title,
                         'record_id': record['_id'],
-                        'description': ''
                     }
                     field_value = record.get(image_field, None)
                     if field_value:

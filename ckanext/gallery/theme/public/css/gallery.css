@@ -2,11 +2,11 @@
   position: absolute;
   z-index: 700;
   background: #131313;
-  left: 20px;
+  left: 15px;
   color: #797979;
   cursor: pointer;
   border-radius: 40px;
-  border: 2px solid #797979;
+  border: 3px solid #797979;
   height: 40px;
   width: 40px;
   text-align: center; }
@@ -17,9 +17,9 @@
     font-size: 16px;
     display: inline-block; }
 #blueimp-gallery .gallery-control-download {
-  bottom: 20px; }
+  top: 80px; }
 #blueimp-gallery .gallery-control-link {
-  bottom: 80px;
+  top: 140px;
   display: none; }
 #blueimp-gallery .copyright {
   z-index: 699;
@@ -79,7 +79,7 @@
         display: block;
         padding: 0 5px;
         line-height: 24px; }
-        .download-tooltip ul li a:hover {
+        .download-tooltip ul li a:hover, .download-tooltip ul li a.active {
           background: #f2f2f2; }
 
 /*# sourceMappingURL=gallery.css.map */
