@@ -4,8 +4,8 @@
             {% for image in images %}
                 <div class="col2 span3">
                     <div class="gallery-image">
-                        <a onclick="return false;" href="{{ image.url }}" title="{{ image.title }}">
-                            <img src="{{ image.thumbnail or image.url }}" alt="{{ image.title }}" />
+                        <a onclick="return false;" href="{{ image.href }}" title="{{ image.title }}">
+                            <img src="{{ image.thumbnail or image.href }}" alt="{{ image.title }}" />
                         </a>
                         {% if image.description %}
                             <p>{{ image.description }}</p>
