@@ -16,7 +16,6 @@ from ckanext.gallery.logic.validators import is_datastore_field
 from ckanext.gallery.plugins.interfaces import IGalleryImage
 from ckanext.gallery.lib.helpers import get_datastore_fields
 
-
 get_action = logic.get_action
 
 not_empty = p.toolkit.get_validator('not_empty')
@@ -25,6 +24,7 @@ Invalid = df.Invalid
 Missing = df.Missing
 
 IS_NOT_NULL = 'IS NOT NULL'
+
 
 class GalleryPlugin(p.SingletonPlugin):
     """
@@ -128,7 +128,7 @@ class GalleryPlugin(p.SingletonPlugin):
             filters = self._get_request_filters()
             # TODO: copy across to NHM code that handles this
             if data_dict['resource']['format'].lower() == 'dwc':
-                filters['_has_image'] = ['true']
+                filters['_has_multimedia'] = 'true'
 
             params = {
                 'resource_id': data_dict['resource']['id'],
@@ -187,7 +187,6 @@ class GalleryPlugin(p.SingletonPlugin):
             tpl_variables['page'] = h.Page(**page_params)
 
         return tpl_variables
-
 
     def pager_url(self, **kwargs):
         routes_dict = _pylons_default_url.environ['pylons.routes_dict']
