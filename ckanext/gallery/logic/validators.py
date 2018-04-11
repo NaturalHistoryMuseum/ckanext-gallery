@@ -1,16 +1,12 @@
-
-#!/usr/bin/env python
+# !/usr/bin/env python
 # encoding: utf-8
 #
 # This file is part of ckanext-gallery
 # Created by the Natural History Museum in London, UK
 
-import ckan.plugins as p
-from ckan.common import _
-
 from ckanext.gallery.lib.helpers import get_datastore_fields
 
-Invalid = p.toolkit.Invalid
+from ckan.plugins import toolkit
 
 
 def is_datastore_field(value, context):
@@ -24,5 +20,4 @@ def is_datastore_field(value, context):
     for field in fields:
         if field[u'id'] in value:
             return value
-    raise Invalid(_(u'Field {0} not in datastore'.format(value)))
-
+    raise toolkit.Invalid(toolkit._(u'Field {0} not in datastore'.format(value)))
