@@ -1,13 +1,13 @@
-
-#!/usr/bin/env python
+# !/usr/bin/env python
 # encoding: utf-8
 #
 # This file is part of ckanext-gallery
 # Created by the Natural History Museum in London, UK
 
-import ckan.plugins as p
+from ckan.plugins import toolkit
 
 _cache = {}
+
 
 def get_datastore_fields(resource_id):
     '''Retrieve list of dataset fields
@@ -19,6 +19,10 @@ def get_datastore_fields(resource_id):
     try:
         fields = _cache[resource_id]
     except KeyError:
-        data = {u'resource_id': resource_id, u'limit': 0}
-        fields = _cache[resource_id] = p.toolkit.get_action(u'datastore_search')({}, data)[u'fields']
+        data = {
+            u'resource_id': resource_id,
+            u'limit': 0
+            }
+        fields = _cache[resource_id] = \
+            toolkit.get_action(u'datastore_search')({}, data)[u'fields']
     return fields
