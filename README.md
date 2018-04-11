@@ -1,6 +1,8 @@
 ckanext-gallery
 ===============
 
+[![Travis branch](https://img.shields.io/travis/NaturalHistoryMuseum/ckanext-gallery/master.svg?style=flat-square)](https://travis-ci.org/NaturalHistoryMuseum/ckanext-gallery) [![Coveralls github branch](https://img.shields.io/coveralls/github/NaturalHistoryMuseum/ckanext-gallery/master.svg?style=flat-square)](https://coveralls.io/github/NaturalHistoryMuseum/ckanext-gallery)
+
 CKAN extension for a dataset gallery view.
 
 Based on https://blueimp.github.io/Gallery/
