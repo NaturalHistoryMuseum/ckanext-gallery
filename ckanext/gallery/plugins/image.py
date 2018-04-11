@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# encoding: utf-8
+#
+# This file is part of ckanext-gallery
+# Created by the Natural History Museum in London, UK
+
 import json
 import ckan.plugins as p
 import ckan.lib.helpers as h
@@ -5,37 +11,40 @@ from ckanext.gallery.plugins.interfaces import IGalleryImage
 from webhelpers.html import literal
 
 class GalleryImagePlugin(p.SingletonPlugin):
-    """
-    Implements the basic image field
+    '''Implements the basic image field
     The URL of an image is present in a text field
-    """
+
+
+    '''
     p.implements(IGalleryImage)
 
     def image_info(self):
-        """
-        Return info for this plugin
-        If resource type is set, only dataset of that type will be available
+        '''
+
+
+        :returns: If resource type is set, only dataset of that type will be available
         :return:
-        """
+
+        '''
         return {
-            'title': 'Text',
-            'resource_type': ['csv'],
-            'field_type': ['text']
+            u'title': u'Text',
+            u'resource_type': [u'csv'],
+            u'field_type': [u'text']
         }
 
     def get_images(self, field_value, record, data_dict):
-        """
-        Get images from field
-        :param field_value:
-        :param record:
-        :param data_dict:
-        :return:
-        """
+        '''Get images from field
+
+        :param field_value: param record:
+        :param data_dict: return:
+        :param record: 
+
+        '''
 
         # Field value just contains the URL
         return [
             {
-                'href': field_value
+                u'href': field_value
             }
         ]
 

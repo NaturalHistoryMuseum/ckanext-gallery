@@ -1,9 +1,9 @@
+
 #!/usr/bin/env python
 # encoding: utf-8
-"""
-Created by 'bens3' on 2013-06-21.
-Copyright (c) 2013 'bens3'. All rights reserved.
-"""
+#
+# This file is part of ckanext-gallery
+# Created by the Natural History Museum in London, UK
 
 import ckan.plugins as p
 from ckan.common import _
@@ -14,15 +14,15 @@ Invalid = p.toolkit.Invalid
 
 
 def is_datastore_field(value, context):
-    '''
-    Make sure this field is an actual datastore field
+    '''Make sure this field is an actual datastore field
 
-    :raises: ckan.lib.navl.dictization_functions.Invalid for other
-        inputs or non-whole values
+    :param value: 
+    :param context: 
+
     '''
-    fields = get_datastore_fields(context['resource'].id)
+    fields = get_datastore_fields(context[u'resource'].id)
     for field in fields:
-        if field['id'] in value:
+        if field[u'id'] in value:
             return value
-    raise Invalid(_('Field {0} not in datastore'.format(value)))
+    raise Invalid(_(u'Field {0} not in datastore'.format(value)))
 
