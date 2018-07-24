@@ -50,7 +50,8 @@ class GalleryPlugin(p.SingletonPlugin):
             'schema': {
                 'image_field': [not_empty, is_datastore_field],
                 'image_plugin': [not_empty],
-                'image_title': [ignore_empty, is_datastore_field]
+                'image_title': [ignore_empty, is_datastore_field],
+                'image_delimiter': [ignore_empty],
             },
             'icon': 'picture',
             'iframed': False,

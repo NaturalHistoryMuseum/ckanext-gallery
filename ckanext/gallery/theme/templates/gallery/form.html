@@ -8,6 +8,10 @@
   {{ form.info(_('Image type to use in the gallery.'), inline=True) }}
 {% endcall %}
 
+{% call form.input('image_delimiter', label=_('Image list delimiter'), value=data.image_delimiter, error=errors.image_delimiter) %}
+    {{ form.info(_('If your image field is the text type and contains a series of delimited image URLs instead of just a single one enter it here'), inline=True) }}
+{% endcall %}
+
 {% call form.select('image_title', label=_('Image title field'), options=[None] + datastore_fields, selected=data.image_title, error=errors.image_title) %}
   {{ form.info(_('Title field to use in the gallery.'), inline=True) }}
 {% endcall %}
