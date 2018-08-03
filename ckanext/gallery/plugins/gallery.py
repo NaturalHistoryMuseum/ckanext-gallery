@@ -47,7 +47,8 @@ class GalleryPlugin(SingletonPlugin):
             u'schema': {
                 u'image_field': [not_empty, is_datastore_field],
                 u'image_plugin': [not_empty],
-                u'image_title': [ignore_empty, is_datastore_field]
+                u'image_title': [ignore_empty, is_datastore_field],
+                u'image_delimiter': [ignore_empty],
                 },
             u'icon': u'picture',
             u'iframed': False,
