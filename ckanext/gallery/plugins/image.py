@@ -17,7 +17,7 @@ class GalleryImagePlugin(p.SingletonPlugin):
         """
         return {
             'title': 'Text',
-            'resource_type': ['csv'],
+            'resource_type': ['csv', 'tsv'],
             'field_type': ['text']
         }
 
