@@ -23,10 +23,10 @@ class GalleryImagePlugin(SingletonPlugin):
 
         '''
         return {
-            u'title': u'Text',
-            u'resource_type': [u'csv'],
-            u'field_type': [u'text']
-            }
+            'title': 'Text',
+            'resource_type': ['csv', 'tsv'],
+            'field_type': ['text']
+        }
 
     def get_images(self, field_value, record, data_dict):
         '''Get images from field value and returns them as a list of dicts specifying just the href.

@@ -161,8 +161,8 @@ class GalleryPlugin(SingletonPlugin):
             # So add filters to the datastore search params
             filters = self._get_request_filters()
             # TODO: copy across to NHM code that handles this
-            if data_dict[u'resource'][u'format'].lower() == u'dwc':
-                filters[u'_has_multimedia'] = u'true'
+            if data_dict['resource']['format'].lower() == 'dwc':
+                filters['_has_image'] = 'true'
 
             params = {
                 u'resource_id': data_dict[u'resource'][u'id'],
@@ -176,17 +176,10 @@ class GalleryPlugin(SingletonPlugin):
             if fulltext:
                 params[u'q'] = fulltext
             # Try and use the solr search if it exists
-            try:
-                search_action = toolkit.get_action(u'datastore_solr_search')
-            # Otherwise fallback to default
-            except KeyError:
-                search_action = toolkit.get_action(u'datastore_search')
+            search_action = toolkit.get_action('datastore_search')
             # Perform the actual search
-            context = {
-                u'user': toolkit.c.user or toolkit.c.author
-                }
-            data = search_action(context, params)
-            item_count = data.get(u'total', 0)
+            data = search_action({}, params)
+            item_count = data.get('total', 0)
             # Get the selected gallery image plugin
             plugin = get_plugin(image_plugin)
             if plugin:
