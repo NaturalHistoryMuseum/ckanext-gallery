@@ -16,7 +16,7 @@ def is_datastore_field(value, context):
     :param context: 
 
     '''
-    fields = get_datastore_fields(context[u'resource'].id)
+    fields = get_datastore_fields(toolkit.c.resource.get(u'id'))
     for field in fields:
         if field[u'id'] in value:
             return value

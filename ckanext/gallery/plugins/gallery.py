@@ -13,6 +13,7 @@ from ckanext.gallery.plugins.interfaces import IGalleryImage
 
 from ckan.plugins import (PluginImplementations, SingletonPlugin, get_plugin, implements,
                           interfaces, toolkit)
+from ckan.lib import helpers  # helpers.Page is not in toolkit.h
 from ckanext.datastore.interfaces import IDatastore
 
 not_empty = toolkit.get_validator(u'not_empty')
@@ -50,7 +51,7 @@ class GalleryPlugin(SingletonPlugin):
                 u'image_title': [ignore_empty, is_datastore_field],
                 u'image_delimiter': [ignore_empty],
                 },
-            u'icon': u'picture',
+            u'icon': u'image',
             u'iframed': False,
             u'filterable': True,
             u'preview_enabled': False,
@@ -220,7 +221,7 @@ class GalleryPlugin(SingletonPlugin):
                 if value:
                     page_params[key] = value
 
-            tpl_variables[u'page'] = toolkit.h.Page(**page_params)
+            tpl_variables[u'page'] = helpers.Page(**page_params)
 
         return tpl_variables
 
