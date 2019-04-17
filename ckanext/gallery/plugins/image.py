@@ -23,9 +23,9 @@ class GalleryImagePlugin(SingletonPlugin):
 
         '''
         return {
-            'title': 'Text',
-            'resource_type': ['csv', 'tsv'],
-            'field_type': ['text']
+            u'title': u'Text',
+            u'resource_type': [u'csv', u'tsv'],
+            u'field_type': [u'text']
         }
 
     def get_images(self, field_value, record, data_dict):
