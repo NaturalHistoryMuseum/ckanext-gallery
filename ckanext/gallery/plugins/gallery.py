@@ -219,10 +219,11 @@ class GalleryPlugin(SingletonPlugin):
         return tpl_variables
 
     def pager_url(self, **kwargs):
-        '''Adds a view id to the kwargs passed to the ckan pager_url function.
+        '''Adds a view id and the view args to the kwargs passed to the ckan pager_url function.
 
         '''
-        view_id = toolkit.request.params.get(u'view_id')
+        view_id = toolkit.request.params.get('view_id')
         if view_id:
-            kwargs[u'view_id'] = view_id
+            kwargs['view_id'] = str(view_id)
+        kwargs.update(toolkit.request.view_args)
         return toolkit.h.pager_url(**kwargs)
