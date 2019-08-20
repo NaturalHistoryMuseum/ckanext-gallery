@@ -1,11 +1,19 @@
+dist: trusty
 language: python
+
 python:
   - "2.7"
-# command to install dependencies
+
 install:
-  - "pip install -e ."
-  - "pip install -r requirements.txt"
-  - "pip install -r dev_requirements.txt"
-# command to run tests
-script: coverage run --source=ckanext-gallery setup.py nosetests
+  - sh ckanext/gallery/tests/bin/build.sh
+
+services:
+  - redis-server
+  - postgresql
+
+addons:
+  postgresql: "9.4"
+
+script: coverage run --source=ckanext.gallery setup.py nosetests --ckan --with-pylons=ckanext/gallery/tests/bin/test.ini --nologcapture --debug=ckantest,ckanext.gallery --rednose
+
 after_success: coveralls
