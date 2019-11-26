@@ -1,8 +1,8 @@
 {% block gallery %}
-    <div id="gallery" data-module="gallery" data-module-images="{{ h.dump_json(images) }}">
+    <div id="gallery" class="container-fluid no-spacing" data-module="gallery" data-module-images="{{ h.dump_json(images) }}">
         <div class="row">
             {% for image in images %}
-                <div class="col2 span3">
+                <div class="col-xl-2 col-md-3 col-sm-4 col-xs-6">
                     <div class="gallery-image">
                         <a onclick="return false;" href="{{ image.href }}" title="{{ image.title }}">
                             <img src="{{ image.thumbnail or image.href }}" alt="{{ image.title }}" />
@@ -17,6 +17,6 @@
       </div>
 
 {% resource 'ckanext-gallery/gallery' %}
-{% include "gallery/snippets/lightbox.html" %}
+{% snippet "gallery/snippets/lightbox.html" %}
 
 {% endblock %}

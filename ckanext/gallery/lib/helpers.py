@@ -1,24 +1,28 @@
-#!/usr/bin/env python
+# !/usr/bin/env python
 # encoding: utf-8
-"""
-Created by 'bens3' on 2013-06-21.
-Copyright (c) 2013 'bens3'. All rights reserved.
-"""
+#
+# This file is part of ckanext-gallery
+# Created by the Natural History Museum in London, UK
 
-import ckan.plugins as p
+from ckan.plugins import toolkit
 
 _cache = {}
 
+
 def get_datastore_fields(resource_id):
-    """
-    Retrieve list of dataset fields
+    '''Retrieve list of dataset fields
     Checked between requests so we can quickly reuse without searching again
-    :param resource_id:
-    :return:
-    """
+
+    :param resource_id: return:
+
+    '''
     try:
         fields = _cache[resource_id]
     except KeyError:
-        data = {'resource_id': resource_id, 'limit': 0}
-        fields = _cache[resource_id] = p.toolkit.get_action('datastore_search')({}, data)['fields']
+        data = {
+            u'resource_id': resource_id,
+            u'limit': 0
+            }
+        fields = _cache[resource_id] = \
+            toolkit.get_action(u'datastore_search')({}, data)[u'fields']
     return fields

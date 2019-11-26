@@ -1,125 +1,158 @@
+#!/usr/bin/env python
+# encoding: utf-8
+#
+# This file is part of ckanext-gallery
+# Created by the Natural History Museum in London, UK
+
 import copy
 import urllib
-import ckan.plugins as p
-import ckan.plugins.toolkit as toolkit
-import ckan.model as model
-from ckan.common import _, c
-import ckan.lib.navl.dictization_functions as df
-import ckan.logic as logic
-from ckanext.datastore.interfaces import IDatastore
-from pylons import config
-import ckan.lib.helpers as h
-from ckan.common import request
-from pylons import url as _pylons_default_url
 
+from ckanext.gallery.lib.helpers import get_datastore_fields
 from ckanext.gallery.logic.validators import is_datastore_field
 from ckanext.gallery.plugins.interfaces import IGalleryImage
-from ckanext.gallery.lib.helpers import get_datastore_fields
 
-get_action = logic.get_action
+from ckan.plugins import (PluginImplementations, SingletonPlugin, get_plugin, implements,
+                          interfaces, toolkit)
+from ckan.lib import helpers  # helpers.Page is not in toolkit.h
+from ckanext.datastore.interfaces import IDatastore
 
-not_empty = p.toolkit.get_validator('not_empty')
-ignore_empty = p.toolkit.get_validator('ignore_empty')
-Invalid = df.Invalid
-Missing = df.Missing
+not_empty = toolkit.get_validator(u'not_empty')
+ignore_empty = toolkit.get_validator(u'ignore_empty')
 
-IS_NOT_NULL = 'IS NOT NULL'
+IS_NOT_NULL = u'IS NOT NULL'
 
 
-class GalleryPlugin(p.SingletonPlugin):
-    """
-    Gallery plugin
-    """
-    p.implements(p.IConfigurer)
-    p.implements(p.IResourceView, inherit=True)
-    p.implements(IDatastore, inherit=True)
+class GalleryPlugin(SingletonPlugin):
+    '''Gallery plugin'''
+    implements(interfaces.IConfigurer)
+    implements(interfaces.IResourceView, inherit=True)
+    implements(IDatastore, inherit=True)
 
     ## IConfigurer
     def update_config(self, config):
-        """Add our template directories to the list of available templates"""
-        p.toolkit.add_template_directory(config, '../theme/templates')
-        p.toolkit.add_public_directory(config, '../theme/public')
-        p.toolkit.add_resource('../theme/public', 'ckanext-gallery')
+        '''Add our template directories to the list of available templates
+
+        :param config: 
+
+        '''
+        toolkit.add_template_directory(config, u'../theme/templates')
+        toolkit.add_public_directory(config, u'../theme/public')
+        toolkit.add_resource(u'../theme/public', u'ckanext-gallery')
 
     ## IResourceView
     def info(self):
-        """Return generic info about the plugin"""
+        ''' '''
         return {
-            'name': 'gallery',
-            'title': 'Gallery',
-            'schema': {
-                'image_field': [not_empty, is_datastore_field],
-                'image_plugin': [not_empty],
-                'image_title': [ignore_empty, is_datastore_field],
-                'image_delimiter': [ignore_empty],
-            },
-            'icon': 'picture',
-            'iframed': False,
-            'filterable': True,
-            'preview_enabled': False,
-            'full_page_edit': False
-        }
+            u'name': u'gallery',
+            u'title': u'Gallery',
+            u'schema': {
+                u'image_field': [not_empty, is_datastore_field],
+                u'image_plugin': [not_empty],
+                u'image_title': [ignore_empty, is_datastore_field],
+                u'image_delimiter': [ignore_empty],
+                },
+            u'icon': u'image',
+            u'iframed': False,
+            u'filterable': True,
+            u'preview_enabled': False,
+            u'full_page_edit': False
+            }
 
     def datastore_validate(self, context, data_dict, all_field_ids):
+        '''
+
+        :param context: 
+        :param data_dict: 
+        :param all_field_ids: 
+
+        '''
         return data_dict
 
     def view_template(self, context, data_dict):
-        return 'gallery/view.html'
+        '''
+
+        :param context: 
+        :param data_dict: 
+
+        '''
+        return u'gallery/view.html'
 
     def form_template(self, context, data_dict):
-        return 'gallery/form.html'
+        '''
+
+        :param context: 
+        :param data_dict: 
+
+        '''
+        return u'gallery/form.html'
 
     def can_view(self, data_dict):
-        """Specify which resources can be viewed by this plugin"""
+        '''Specify which resources can be viewed by this plugin
+
+        :param data_dict: 
+
+        '''
         # Check that we have a datastore for this resource
-        if data_dict['resource'].get('datastore_active'):
+        if data_dict[u'resource'].get(u'datastore_active'):
             return True
         return False
 
     def _get_request_filters(self):
-        """Return a dict representing the filters of the current request"""
+        ''' '''
         filters = {}
-        for f in urllib.unquote(request.params.get('filters', '')).split('|'):
+        for f in urllib.unquote(toolkit.request.params.get(u'filters', u'')).split(u'|'):
             if f:
-                (k, v) = f.split(':', 1)
+                (k, v) = f.split(u':', 1)
                 if k not in filters:
                     filters[k] = []
                 filters[k].append(v)
         return filters
 
     def setup_template_variables(self, context, data_dict):
-        """Setup variables available to templates"""
+        '''Setup variables available to templates
 
-        records_per_page = config.get("ckanext.gallery.records_per_page", 32)
-        current_page = request.params.get('page', 1)
+        :param context: 
+        :param data_dict: 
+
+        '''
+
+        records_per_page = toolkit.config.get(u'ckanext.gallery.records_per_page', 32)
+        current_page = toolkit.request.params.get(u'page', 1)
         image_list = []
 
         # Get list of datastore fields and format into a dict, ready for a form
-        datastore_fields = get_datastore_fields(data_dict['resource']['id'])
+        datastore_fields = get_datastore_fields(data_dict[u'resource'][u'id'])
 
         image_plugins = []
         # Get gallery image plugins
-        for plugin in p.PluginImplementations(IGalleryImage):
+        for plugin in PluginImplementations(IGalleryImage):
             image_info = plugin.image_info()
             # If we have resource type set, make sure the format of the resource matches
             # Otherwise continue to next record
-            if image_info['resource_type'] and data_dict['resource']['format'].lower() not in image_info['resource_type']:
+            if image_info[u'resource_type'] and data_dict[u'resource'][
+                u'format'].lower() not in image_info[u'resource_type']:
                 continue
-            image_info['plugin'] = plugin
+            image_info[u'plugin'] = plugin
             image_plugins.append(image_info)
 
-        image_field = data_dict['resource_view'].get('image_field', None)
-        image_plugin = data_dict['resource_view'].get('image_plugin', None)
-        image_title_field = data_dict['resource_view'].get('image_title', None)
+        image_field = data_dict[u'resource_view'].get(u'image_field', None)
+        image_plugin = data_dict[u'resource_view'].get(u'image_plugin', None)
+        image_title_field = data_dict[u'resource_view'].get(u'image_title', None)
         # Set up template variables
         tpl_variables = {
-            'images': image_list,
-            'datastore_fields': [{'value': f['id'], 'text': f['id']} for f in datastore_fields],
-            'image_plugins': [{'value': f['plugin'].name, 'text': f['title']} for f in image_plugins],
-            'defaults': {},
-            'resource_id': data_dict['resource']['id'],
-            'package_name': data_dict['package']['name']
-        }
+            u'images': image_list,
+            u'datastore_fields': [{
+                u'value': f[u'id'],
+                u'text': f[u'id']
+                } for f in datastore_fields],
+            u'image_plugins': [{
+                u'value': f[u'plugin'].name,
+                u'text': f[u'title']
+                } for f in image_plugins],
+            u'defaults': {},
+            u'resource_id': data_dict[u'resource'][u'id'],
+            u'package_name': data_dict[u'package'][u'name']
+            }
         # Load the images
         # Only try and load images, if an image field has been selected
         if image_field and image_plugin:
@@ -128,66 +161,69 @@ class GalleryPlugin(p.SingletonPlugin):
             # So add filters to the datastore search params
             filters = self._get_request_filters()
             # TODO: copy across to NHM code that handles this
-            if data_dict['resource']['format'].lower() == 'dwc':
-                filters['_has_image'] = 'true'
+            if data_dict[u'resource'][u'format'].lower() == u'dwc':
+                filters[u'_has_image'] = u'true'
 
             params = {
-                'resource_id': data_dict['resource']['id'],
-                'limit': records_per_page,
-                'offset': offset,
-                'filters': filters,
-                'sort': '_id'
-            }
+                u'resource_id': data_dict[u'resource'][u'id'],
+                u'limit': records_per_page,
+                u'offset': offset,
+                u'filters': filters,
+                u'sort': u'_id'
+                }
             # Add the full text filter
-            fulltext = request.params.get('q')
+            fulltext = toolkit.request.params.get(u'q')
             if fulltext:
-                params['q'] = fulltext
+                params[u'q'] = fulltext
             # Try and use the solr search if it exists
-            search_action = toolkit.get_action('datastore_search')
+            search_action = toolkit.get_action(u'datastore_search')
             # Perform the actual search
             data = search_action({}, params)
-            item_count = data.get('total', 0)
+            item_count = data.get(u'total', 0)
             # Get the selected gallery image plugin
-            plugin = p.get_plugin(image_plugin)
+            plugin = get_plugin(image_plugin)
             if plugin:
-                for record in data['records']:
-                    image_title = record.get(image_title_field, "")
+                for record in data[u'records']:
+                    image_title = record.get(image_title_field, u'')
                     image_defaults = {
-                        'title': image_title,
-                        'record_id': record['_id'],
-                        'resource_id': data_dict['resource']['id']
-                    }
+                        u'title': image_title,
+                        u'record_id': record[u'_id'],
+                        u'resource_id': data_dict[u'resource'][u'id']
+                        }
                     field_value = record.get(image_field, None)
                     if field_value:
                         images = plugin.get_images(field_value, record, data_dict)
                         for image in images:
                             image_default_copy = copy.copy(image_defaults)
                             # Merge in the plugin image settings to the default image
-                            # Using an copy so the defaults do not change for multiple images
+                            # Using an copy so the defaults do not change for multiple
+                            #  images
                             image_default_copy.update(image)
                             image_list.append(image_default_copy)
 
             page_params = {
-                'collection': data['records'],
-                'page': current_page,
-                'url': self.pager_url,
-                'items_per_page': records_per_page,
-                'item_count': item_count,
-            }
+                u'collection': data[u'records'],
+                u'page': current_page,
+                u'url': self.pager_url,
+                u'items_per_page': records_per_page,
+                u'item_count': item_count,
+                }
             # Add filter params to page links
-            for key in ['q', 'filters']:
-                value = request.params.get(key)
+            for key in [u'q', u'filters']:
+                value = toolkit.request.params.get(key)
                 if value:
                     page_params[key] = value
 
-            tpl_variables['page'] = h.Page(**page_params)
+            tpl_variables[u'page'] = helpers.Page(**page_params)
 
         return tpl_variables
 
     def pager_url(self, **kwargs):
-        routes_dict = _pylons_default_url.environ['pylons.routes_dict']
-        view_id = request.params.get('view_id')
+        '''Adds a view id and the view args to the kwargs passed to the ckan pager_url function.
+
+        '''
+        view_id = toolkit.request.params.get('view_id')
         if view_id:
-            routes_dict['view_id'] = view_id
-        routes_dict.update(kwargs)
-        return h.url_for(**routes_dict)
+            kwargs['view_id'] = str(view_id)
+        kwargs.update(toolkit.request.view_args)
+        return toolkit.h.pager_url(**kwargs)
