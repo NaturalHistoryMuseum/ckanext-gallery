@@ -1,7 +1,0 @@
-{
-  "name": "CKAN Gallery Extension",
-  "dependencies": {
-    "blueimp-gallery": "2.9.0",
-    "jquery-ui-tooltip": "~1.11.5"
-  }
-}

@@ -9,18 +9,23 @@
   border: 3px solid #797979;
   height: 40px;
   width: 40px;
-  text-align: center; }
-  #blueimp-gallery .gallery-control:hover {
-    text-decoration: none; }
-  #blueimp-gallery .gallery-control i {
-    margin-top: 11px;
-    font-size: 16px;
-    display: inline-block; }
+  text-align: center;
+}
+#blueimp-gallery .gallery-control:hover {
+  text-decoration: none;
+}
+#blueimp-gallery .gallery-control i {
+  margin-top: 11px;
+  font-size: 16px;
+  display: inline-block;
+}
 #blueimp-gallery .gallery-control-download {
-  top: 80px; }
+  top: 80px;
+}
 #blueimp-gallery .gallery-control-link {
   top: 140px;
-  display: none; }
+  display: none;
+}
 #blueimp-gallery .copyright {
   z-index: 699;
   background: rgba(0, 0, 0, 0.5);
@@ -32,54 +37,41 @@
   color: #fff;
   width: 100%;
   margin: 0;
-  line-height: 1.6em; }
-  #blueimp-gallery .copyright a {
-    color: #ccc; }
+  line-height: 1.6em;
+}
+#blueimp-gallery .copyright a {
+  color: #ccc;
+}
 
 #gallery .gallery-image {
   text-align: center;
   height: 210px;
-  overflow: hidden; }
-  #gallery .gallery-image a {
-    display: block;
-    padding: 10px; }
-    #gallery .gallery-image a img {
-      max-height: 140px; }
-  #gallery .gallery-image p {
-    font-size: 11px;
-    min-height: 30px;
-    margin-bottom: 0;
-    line-height: 14px; }
-    #gallery .gallery-image p span {
-      width: 180px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: inline-block;
-      text-align: center; }
+  overflow: hidden;
+}
+#gallery .gallery-image a {
+  display: block;
+  padding: 10px;
+}
+#gallery .gallery-image a img {
+  max-height: 140px;
+}
+#gallery .gallery-image p {
+  font-size: 11px;
+  min-height: 30px;
+  margin-bottom: 0;
+  line-height: 14px;
+}
+#gallery .gallery-image p span {
+  width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  text-align: center;
+}
 
 .blueimp-gallery {
-  z-index: 500 !important; }
-
-.download-tooltip {
-  z-index: 1000;
-  background: #fff;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(0, 0, 0, 0.2);
-  border: 0;
-  border-radius: 3px; }
-  .download-tooltip ul {
-    margin: 0; }
-    .download-tooltip ul li {
-      list-style: none; }
-      .download-tooltip ul li a {
-        color: #212124;
-        font-size: 14px;
-        font-weight: 400;
-        text-decoration: none;
-        display: block;
-        padding: 0 5px;
-        line-height: 24px; }
-        .download-tooltip ul li a:hover, .download-tooltip ul li a.active {
-          background: #f2f2f2; }
+  z-index: 500 !important;
+}
 
 /*# sourceMappingURL=gallery.css.map */
