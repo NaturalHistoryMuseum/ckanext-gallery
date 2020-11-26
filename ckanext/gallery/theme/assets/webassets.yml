@@ -1,0 +1,25 @@
+main-js:
+  output: ckanext-gallery/%(version)s_main.js
+  filters: rjsmin
+  contents:
+    - vendor/blueimp-gallery/js/blueimp-gallery.js
+    - vendor/jquery-ui-1.12.1.custom/jquery-ui.js
+    - js/gallery.js
+
+main-css:
+  output: ckanext-gallery/%(version)s_main.css
+  filters: cssrewrite
+  extra:
+    preload:
+      - main-scss
+  contents:
+    - vendor/blueimp-gallery/css/blueimp-gallery.css
+    - vendor/jquery-ui-1.12.1.custom/jquery-ui.css
+
+main-scss:
+  output: ckanext-gallery/%(version)s_main-scss.css
+  filters: node-scss
+  config:
+    NODE_SASS_BIN: ../../../../../node_modules/.bin/node-sass
+  contents:
+    - scss/gallery.scss

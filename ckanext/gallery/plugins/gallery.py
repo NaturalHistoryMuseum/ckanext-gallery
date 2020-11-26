@@ -32,12 +32,12 @@ class GalleryPlugin(SingletonPlugin):
     def update_config(self, config):
         '''Add our template directories to the list of available templates
 
-        :param config: 
+        :param config:
 
         '''
         toolkit.add_template_directory(config, u'../theme/templates')
-        toolkit.add_public_directory(config, u'../theme/public')
-        toolkit.add_resource(u'../theme/public', u'ckanext-gallery')
+        toolkit.add_resource(u'../theme/assets', u'ckanext-gallery')
+        toolkit.add_public_directory(config, u'../theme/assets/vendor')
 
     ## IResourceView
     def info(self):
@@ -61,9 +61,9 @@ class GalleryPlugin(SingletonPlugin):
     def datastore_validate(self, context, data_dict, all_field_ids):
         '''
 
-        :param context: 
-        :param data_dict: 
-        :param all_field_ids: 
+        :param context:
+        :param data_dict:
+        :param all_field_ids:
 
         '''
         return data_dict
@@ -71,8 +71,8 @@ class GalleryPlugin(SingletonPlugin):
     def view_template(self, context, data_dict):
         '''
 
-        :param context: 
-        :param data_dict: 
+        :param context:
+        :param data_dict:
 
         '''
         return u'gallery/view.html'
@@ -80,8 +80,8 @@ class GalleryPlugin(SingletonPlugin):
     def form_template(self, context, data_dict):
         '''
 
-        :param context: 
-        :param data_dict: 
+        :param context:
+        :param data_dict:
 
         '''
         return u'gallery/form.html'
@@ -89,7 +89,7 @@ class GalleryPlugin(SingletonPlugin):
     def can_view(self, data_dict):
         '''Specify which resources can be viewed by this plugin
 
-        :param data_dict: 
+        :param data_dict:
 
         '''
         # Check that we have a datastore for this resource
@@ -111,8 +111,8 @@ class GalleryPlugin(SingletonPlugin):
     def setup_template_variables(self, context, data_dict):
         '''Setup variables available to templates
 
-        :param context: 
-        :param data_dict: 
+        :param context:
+        :param data_dict:
 
         '''
 
