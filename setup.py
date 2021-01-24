@@ -6,33 +6,37 @@
 
 from setuptools import find_packages, setup
 
-__version__ = u'1.0.1'
+__version__ = '2.0.0'
 
-with open(u'README.md', u'r') as f:
+with open('README.md', 'r') as f:
     __long_description__ = f.read()
 
 setup(
-    name=u'ckanext-gallery',
+    name='ckanext-gallery',
     version=__version__,
-    description=u'A CKAN extension for a dataset gallery view.',
+    description='A CKAN extension for a dataset gallery view.',
     long_description=__long_description__,
     classifiers=[
-        u'Development Status :: 3 - Alpha',
-        u'Framework :: Flask',
-        u'Programming Language :: Python :: 2.7'
+        'Development Status :: 5 - Production/Stable',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3 :: Only',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
-    keywords=u'CKAN data gallery',
-    author=u'Natural History Museum',
-    author_email=u'data@nhm.ac.uk',
-    url=u'https://github.com/NaturalHistoryMuseum/ckanext-gallery',
-    license=u'GNU GPLv3',
-    packages=find_packages(exclude=[u'tests']),
-    namespace_packages=[u'ckanext', u'ckanext.gallery'],
+    keywords='CKAN data gallery',
+    author='Natural History Museum',
+    author_email='data@nhm.ac.uk',
+    url='https://github.com/NaturalHistoryMuseum/ckanext-gallery',
+    license='GNU GPLv3',
+    packages=find_packages(exclude=['tests']),
+    namespace_packages=['ckanext', 'ckanext.gallery'],
     include_package_data=True,
     zip_safe=False,
     install_requires=[],
     entry_points= \
-        u'''
+        '''
         [ckan.plugins]
             gallery=ckanext.gallery.plugins.gallery:GalleryPlugin
             gallery_image=ckanext.gallery.plugins.image:GalleryImagePlugin

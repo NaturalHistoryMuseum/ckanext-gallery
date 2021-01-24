@@ -23,9 +23,9 @@ class GalleryImagePlugin(SingletonPlugin):
 
         '''
         return {
-            u'title': u'Text',
-            u'resource_type': [u'csv', u'tsv'],
-            u'field_type': [u'text']
+            'title': 'Text',
+            'resource_type': ['csv', 'tsv'],
+            'field_type': ['text']
         }
 
     def get_images(self, field_value, record, data_dict):
@@ -38,11 +38,11 @@ class GalleryImagePlugin(SingletonPlugin):
 
         '''
         # retrieve the delimiter if there is one
-        delimiter = data_dict[u'resource_view'].get(u'image_delimiter', None)
+        delimiter = data_dict['resource_view'].get('image_delimiter', None)
         if delimiter:
             # split the text by the delimiter if we have one
             images = field_value.split(delimiter)
         else:
             images = [field_value]
 
-        return [{u'href': image.strip()} for image in images if image.strip()]
+        return [{'href': image.strip()} for image in images if image.strip()]

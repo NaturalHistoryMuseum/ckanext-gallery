@@ -21,8 +21,8 @@ def get_datastore_fields(resource_id):
         fields = _cache[resource_id]
     except KeyError:
         data = {
-            u'resource_id': resource_id,
-            u'limit': 0
+            'resource_id': resource_id,
+            'limit': 0
         }
-        fields = _cache[resource_id] = toolkit.get_action(u'datastore_search')({}, data)[u'fields']
+        fields = _cache[resource_id] = toolkit.get_action('datastore_search')({}, data)['fields']
     return fields
