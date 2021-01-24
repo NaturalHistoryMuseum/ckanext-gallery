@@ -15,3 +15,5 @@ Thumbs.db
 
 .coverage
 node_modules
+.pytest_cache
+.idea
