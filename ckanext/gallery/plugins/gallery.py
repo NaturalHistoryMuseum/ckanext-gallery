@@ -5,15 +5,15 @@
 # Created by the Natural History Museum in London, UK
 
 import copy
-import urllib
+
 from ckan.lib import helpers  # helpers.Page is not in toolkit.h
 from ckan.plugins import (PluginImplementations, SingletonPlugin, get_plugin, implements,
                           interfaces, toolkit)
 from ckanext.datastore.interfaces import IDatastore
-
 from ckanext.gallery.lib.helpers import get_datastore_fields
 from ckanext.gallery.logic.validators import is_datastore_field
 from ckanext.gallery.plugins.interfaces import IGalleryImage
+from urllib.parse import unquote
 
 not_empty = toolkit.get_validator('not_empty')
 ignore_empty = toolkit.get_validator('ignore_empty')
@@ -99,7 +99,7 @@ class GalleryPlugin(SingletonPlugin):
     def _get_request_filters(self):
         ''' '''
         filters = {}
-        for f in urllib.unquote(toolkit.request.params.get('filters', '')).split('|'):
+        for f in unquote(toolkit.request.params.get('filters', '')).split('|'):
             if f:
                 k, v = f.split(':', 1)
                 if k not in filters:
