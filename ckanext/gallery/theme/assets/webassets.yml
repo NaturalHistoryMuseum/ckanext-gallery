@@ -11,7 +11,7 @@ main-css:
   filters: cssrewrite
   extra:
     preload:
-      - main-scss
+      - ckanext-gallery/main-scss
   contents:
     - vendor/blueimp-gallery/css/blueimp-gallery.css
     - vendor/jquery-ui-1.12.1.custom/jquery-ui.css
