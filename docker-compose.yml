@@ -18,8 +18,6 @@ services:
   solr:
     build:
       context: https://github.com/okfn/docker-ckan.git#:solr
-    logging:
-      driver: none
 
   db:
     build:
