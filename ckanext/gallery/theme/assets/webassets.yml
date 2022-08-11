@@ -11,15 +11,15 @@ main-css:
   filters: cssrewrite
   extra:
     preload:
-      - ckanext-gallery/main-scss
+      - ckanext-gallery/main-less
   contents:
     - vendor/blueimp-gallery/css/blueimp-gallery.css
     - vendor/jquery-ui-1.12.1.custom/jquery-ui.css
 
-main-scss:
-  output: ckanext-gallery/%(version)s_main-scss.css
-  filters: node-scss
+main-less:
+  output: ckanext-gallery/%(version)s_main-less.css
+  filters: less
   config:
-    NODE_SASS_BIN: ../../../../../node_modules/.bin/node-sass
+    LESS_BIN: ../../../../../node_modules/less/bin/lessc
   contents:
-    - scss/gallery.scss
+    - less/gallery.less
