@@ -13,11 +13,12 @@ services:
       - solr
       - redis
     volumes:
-      - .:/srv/app/src/ckanext-gallery
+      - .:/base/src/ckanext-gallery
 
   solr:
-    build:
-      context: https://github.com/okfn/docker-ckan.git#:solr
+    image: ckan/ckan-solr:2.9
+    logging:
+      driver: none
 
   db:
     build:
