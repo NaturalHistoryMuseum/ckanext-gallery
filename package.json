@@ -1,7 +1,7 @@
 {
   "name": "ckanext-gallery",
-  "version": "0.0.1",
-  "description": "Natural History Museum CKAN Plugin",
+  "version": "2.1.0",
+  "description": "A CKAN extension for a dataset gallery view.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NaturalHistoryMuseum/ckanext-gallery.git"
@@ -11,8 +11,8 @@
   "bugs": {
     "url": "https://github.com/NaturalHistoryMuseum/ckanext-gallery/issues"
   },
-  "homepage": "https://data.nhm.ac.uk",
+  "homepage": "https://github.com/NaturalHistoryMuseum/ckanext-gallery",
   "dependencies": {
-    "less": "^3.12.2"
+    "less": "^4.1.3"
   }
 }
