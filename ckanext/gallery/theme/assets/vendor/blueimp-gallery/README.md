@@ -41,7 +41,7 @@
 [blueimp Gallery Demo](http://blueimp.github.io/Gallery/)
 
 ## Description
-blueimp Gallery is a touch-enabled, responsive and customizable image and video gallery, carousel and lightbox, optimized for both mobile and desktop web browsers.  
+blueimp Gallery is a touch-enabled, responsive and customizable image and video gallery, carousel and lightbox, optimized for both mobile and desktop web browsers.
 It features swipe, mouse and keyboard navigation, transition effects, slideshow functionality, fullscreen support and on-demand content loading and can be extended to display additional content types.
 
 ## Setup
@@ -235,7 +235,7 @@ var options = {
     closeOnSwipeUpOrDown: true,
     // Emulate touch events on mouse-pointer devices such as desktop browsers:
     emulateTouchEvents: true,
-    // Hide the page scrollbars: 
+    // Hide the page scrollbars:
     hidePageScrollbars: true,
     // Stops any touches on the container from scrolling the page:
     disableScroll: true,
@@ -421,7 +421,7 @@ It is also possible to define the container and element options with a more comp
 If the helper script is replaced with [jQuery](http://jquery.com/), the container and element options can be any valid jQuery selector.
 
 ### Property options
-The options ending with "Property" define how the properties of each link element are accessed.  
+The options ending with "Property" define how the properties of each link element are accessed.
 For example, the **urlProperty** is by default set to **href**. This allows to define link elements with **href** or **data-href** attributes:
 
 ```html
@@ -487,7 +487,7 @@ var gallery = blueimp.Gallery([
 
 The URL property name defined by each list object can be configured via the **urlProperty** option. By default, it is set to **href**, which allows to pass a list of HTML link elements as first argument.
 
-The object returned by executing the Gallery function (the **gallery** variable in the example code above) is a new instance of the Gallery and allows to access the public [API methods](#api-methods) provided by the Gallery.  
+The object returned by executing the Gallery function (the **gallery** variable in the example code above) is a new instance of the Gallery and allows to access the public [API methods](#api-methods) provided by the Gallery.
 The Gallery initialization function returns **false** if the given list was empty, the Gallery widget is missing, or the browser doesn't pass the functionality test.
 
 ### API methods
@@ -542,7 +542,7 @@ blueimp.Gallery([
 ]);
 ```
 
-The Gallery uses the **type** property to determine the content type of the object to display.  
+The Gallery uses the **type** property to determine the content type of the object to display.
 If the type property is empty or doesn't exist, the default type **image** is assumed.
 
 For images, the **thumbnail** property defines the URL of the image thumbnail, which is used for the indicator navigation displayed at the bottom of the Gallery, if the controls are visible.
@@ -648,9 +648,9 @@ blueimp.Gallery(
 ```
 
 ### Additional content types
-By extending the Gallery prototype with new factory methods, additional content types can be displayed.  By default, blueimp Gallery provides the **imageFactory** and **videoFactory** methods for **image** and **video** content types respectively.  
+By extending the Gallery prototype with new factory methods, additional content types can be displayed.  By default, blueimp Gallery provides the **imageFactory** and **videoFactory** methods for **image** and **video** content types respectively.
 
-The Gallery uses the **type** property of each content object to determine which factory method to use.  The **type** defines the [Internet media type](http://en.wikipedia.org/wiki/Internet_media_type) of the content object and is composed of two or more parts: A type, a subtype, and zero or more optional parameters, e.g. **text/html; charset=UTF-8** for an HTML document with UTF-8 encoding.  
+The Gallery uses the **type** property of each content object to determine which factory method to use.  The **type** defines the [Internet media type](http://en.wikipedia.org/wiki/Internet_media_type) of the content object and is composed of two or more parts: A type, a subtype, and zero or more optional parameters, e.g. **text/html; charset=UTF-8** for an HTML document with UTF-8 encoding.
 The main type (the string in front of the slash, **text** in the example above) is concatenated with the string **Factory** to create the factory method name, e.g. **textFactory**.
 
 #### Example HTML text factory implementation
@@ -757,11 +757,11 @@ The jQuery plugin also introduces the additional **filter** option, which is app
 </div>
 ```
 
-This will initialize the Gallery with the option **startSlideshow** set to **true**.  
+This will initialize the Gallery with the option **startSlideshow** set to **true**.
 It will also filter the Gallery links so that only links with an even index number will be included.
 
 #### Container ids and link grouping
-If the **data-gallery** attribute value is a valid id string (e.g. "#blueimp-gallery"), it is used as container option.  
+If the **data-gallery** attribute value is a valid id string (e.g. "#blueimp-gallery"), it is used as container option.
 Setting **data-gallery** to a non-empty string also allows to group links into different sets of Gallery images:
 
 ```html
@@ -839,7 +839,7 @@ You can also use the individual source files instead of the standalone minified 
 <script src="js/blueimp-gallery-video.js"></script>
 ```
 
-The helper script can be replaced by [jQuery](http://jquery.com/) v. 1.7+.  
+The helper script can be replaced by [jQuery](http://jquery.com/) v. 1.7+.
 The fullscreen, indicator and video source files are optional if their functionality is not required.
 
 The [jQuery plugin](#jquery-plugin) requires [jQuery](http://jquery.com/) v. 1.7+ and the basic Gallery script, while the fullscreen, indicator and video source files are also optional:

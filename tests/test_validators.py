@@ -5,7 +5,6 @@ from mock import patch, MagicMock
 
 
 class TestIsDatastoreField(object):
-
     def test_valid(self):
         test_field = u'beans'
         mock_fields = [
@@ -17,7 +16,10 @@ class TestIsDatastoreField(object):
         get_fields_mock = MagicMock(return_value=mock_fields)
 
         with patch(u'ckanext.gallery.logic.validators.toolkit', mock_toolkit):
-            with patch(u'ckanext.gallery.logic.validators.get_datastore_fields', get_fields_mock):
+            with patch(
+                u'ckanext.gallery.logic.validators.get_datastore_fields',
+                get_fields_mock,
+            ):
                 assert is_datastore_field([test_field], MagicMock()) == [test_field]
 
     def test_invalid(self):
@@ -32,6 +34,9 @@ class TestIsDatastoreField(object):
         get_fields_mock = MagicMock(return_value=mock_fields)
 
         with patch(u'ckanext.gallery.logic.validators.toolkit', mock_toolkit):
-            with patch(u'ckanext.gallery.logic.validators.get_datastore_fields', get_fields_mock):
+            with patch(
+                u'ckanext.gallery.logic.validators.get_datastore_fields',
+                get_fields_mock,
+            ):
                 with pytest.raises(toolkit.Invalid):
                     is_datastore_field([test_field], MagicMock())

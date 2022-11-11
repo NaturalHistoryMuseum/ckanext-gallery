@@ -10,10 +10,10 @@ from ckan.plugins import SingletonPlugin, implements
 
 
 class GalleryImagePlugin(SingletonPlugin):
-    '''Implements the basic image field
-    The URL of an image is present in a text field
+    """
+    Implements the basic image field The URL of an image is present in a text field.
+    """
 
-    '''
     implements(IGalleryImage)
 
     def image_info(self):
@@ -25,18 +25,19 @@ class GalleryImagePlugin(SingletonPlugin):
         return {
             'title': 'Text',
             'resource_type': ['csv', 'tsv'],
-            'field_type': ['text']
+            'field_type': ['text'],
         }
 
     def get_images(self, field_value, record, data_dict):
-        '''Get images from field value and returns them as a list of dicts specifying just the href.
+        """
+        Get images from field value and returns them as a list of dicts specifying just
+        the href.
 
         :param field_value: the value of the record's image field
         :param record: the record dict itself
         :param data_dict: relevant data in a dict, currently we only use the resource_view contained within
         :return: a list of dicts
-
-        '''
+        """
         # retrieve the delimiter if there is one
         delimiter = data_dict['resource_view'].get('image_delimiter', None)
         if delimiter:
