@@ -1,3 +1,4 @@
+<!--header-start-->
 <img src=".github/nhm-logo.svg" align="left" width="150px" height="100px" hspace="40"/>
 
 # ckanext-gallery
@@ -10,16 +11,20 @@
 
 _A CKAN extension for a dataset gallery view._
 
+<!--header-end-->
 
 # Overview
 
+<!--overview-start-->
 Adds a gallery view for resources on a CKAN instance. Two plugins are included in this extension: `gallery` and `gallery_image`.
 
 Based on [blueimp Gallery](https://blueimp.github.io/Gallery).
 
+<!--overview-end-->
 
 # Installation
 
+<!--installation-start-->
 Path variables used below:
 - `$INSTALL_FOLDER` (i.e. where CKAN is installed), e.g. `/usr/lib/ckan/default`
 - `$CONFIG_FILE`, e.g. `/etc/ckan/default/development.ini`
@@ -57,17 +62,22 @@ Path variables used below:
   ckan.plugins = ... gallery
   ```
 
+<!--installation-end-->
+
 # Configuration
 
+<!--configuration-start-->
 There's only one option that can be specified in the `.ini` file:
 
 Name|Description|Default
 --|---|--
 `ckanext.gallery.records_per_page`|Number of images to display on a page|32
 
+<!--configuration-end-->
 
 # Usage
 
+<!--usage-start-->
 To use as a view, the 'Gallery' type should be available after installing the plugin.
 
 ## Interfaces
@@ -112,9 +122,11 @@ class YourPlugin(SingletonPlugin):
 {% snippet 'gallery/snippets/gallery.html', images=g.images, resource_id=res.id %}
 ```
 
+<!--usage-end-->
 
 # Testing
 
+<!--testing-start-->
 There is a Docker compose configuration available in this repository to make it easier to run tests.
 
 To run the tests against ckan 2.9.x on Python3:
@@ -133,3 +145,5 @@ docker-compose run ckan
 ```
 
 The ckan image uses the Dockerfile in the `docker/` folder.
+
+<!--testing-end-->
