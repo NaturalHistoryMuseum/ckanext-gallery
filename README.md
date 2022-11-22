@@ -1,24 +1,30 @@
+<!--header-start-->
 <img src=".github/nhm-logo.svg" align="left" width="150px" height="100px" hspace="40"/>
 
 # ckanext-gallery
 
-[![Tests](https://github.com/NaturalHistoryMuseum/ckanext-gallery/actions/workflows/main.yml/badge.svg)](https://github.com/NaturalHistoryMuseum/ckanext-gallery/actions/workflows/main.yml)
-[![Coveralls](https://img.shields.io/coveralls/github/NaturalHistoryMuseum/ckanext-gallery/master.svg?style=flat-square)](https://coveralls.io/github/NaturalHistoryMuseum/ckanext-gallery)
+[![Tests](https://img.shields.io/github/workflow/status/NaturalHistoryMuseum/ckanext-gallery/Tests?style=flat-square)](https://github.com/NaturalHistoryMuseum/ckanext-gallery/actions/workflows/main.yml)
+[![Coveralls](https://img.shields.io/coveralls/github/NaturalHistoryMuseum/ckanext-gallery/main?style=flat-square)](https://coveralls.io/github/NaturalHistoryMuseum/ckanext-gallery)
 [![CKAN](https://img.shields.io/badge/ckan-2.9.1-orange.svg?style=flat-square)](https://github.com/ckan/ckan)
 [![Python](https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8-blue.svg?style=flat-square)](https://www.python.org/)
+[![Docs](https://img.shields.io/readthedocs/ckanext-gallery?style=flat-square)](https://ckanext-gallery.readthedocs.io)
 
 _A CKAN extension for a dataset gallery view._
 
+<!--header-end-->
 
 # Overview
 
+<!--overview-start-->
 Adds a gallery view for resources on a CKAN instance. Two plugins are included in this extension: `gallery` and `gallery_image`.
 
 Based on [blueimp Gallery](https://blueimp.github.io/Gallery).
 
+<!--overview-end-->
 
 # Installation
 
+<!--installation-start-->
 Path variables used below:
 - `$INSTALL_FOLDER` (i.e. where CKAN is installed), e.g. `/usr/lib/ckan/default`
 - `$CONFIG_FILE`, e.g. `/etc/ckan/default/development.ini`
@@ -56,17 +62,22 @@ Path variables used below:
   ckan.plugins = ... gallery
   ```
 
+<!--installation-end-->
+
 # Configuration
 
+<!--configuration-start-->
 There's only one option that can be specified in the `.ini` file:
 
 Name|Description|Default
 --|---|--
 `ckanext.gallery.records_per_page`|Number of images to display on a page|32
 
+<!--configuration-end-->
 
 # Usage
 
+<!--usage-start-->
 To use as a view, the 'Gallery' type should be available after installing the plugin.
 
 ## Interfaces
@@ -111,12 +122,12 @@ class YourPlugin(SingletonPlugin):
 {% snippet 'gallery/snippets/gallery.html', images=g.images, resource_id=res.id %}
 ```
 
+<!--usage-end-->
 
 # Testing
-_Test coverage is currently extremely limited._
 
-To run the tests in this extension, there is a Docker compose configuration available in this
-repository to make it easy.
+<!--testing-start-->
+There is a Docker compose configuration available in this repository to make it easier to run tests.
 
 To run the tests against ckan 2.9.x on Python3:
 
@@ -133,4 +144,6 @@ docker-compose build
 docker-compose run ckan
 ```
 
-The ckan image uses the Dockerfile in the `docker/` folder which is based on `openknowledge/ckan-dev:2.9`.
+The ckan image uses the Dockerfile in the `docker/` folder.
+
+<!--testing-end-->
