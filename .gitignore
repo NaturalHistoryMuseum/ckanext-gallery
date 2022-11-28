@@ -1,19 +1,9 @@
-0.3# Compiled source #
-###################
-*.pyc
 *.egg-info
-
-# OS generated files #
-######################
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-.coverage
-node_modules
+*.pyc
+.noseids
 .pytest_cache
+.coverage
+build/
+dist/
 .idea
+**/node_modules/

@@ -7,8 +7,14 @@
 import copy
 
 from ckan.lib import helpers  # helpers.Page is not in toolkit.h
-from ckan.plugins import (PluginImplementations, SingletonPlugin, get_plugin, implements,
-                          interfaces, toolkit)
+from ckan.plugins import (
+    PluginImplementations,
+    SingletonPlugin,
+    get_plugin,
+    implements,
+    interfaces,
+    toolkit,
+)
 from ckanext.datastore.interfaces import IDatastore
 from ckanext.gallery.lib.helpers import get_datastore_fields
 from ckanext.gallery.logic.validators import is_datastore_field
@@ -22,25 +28,27 @@ IS_NOT_NULL = 'IS NOT NULL'
 
 
 class GalleryPlugin(SingletonPlugin):
-    '''Gallery plugin'''
+    """
+    Gallery plugin.
+    """
+
     implements(interfaces.IConfigurer)
     implements(interfaces.IResourceView, inherit=True)
     implements(IDatastore, inherit=True)
 
     ## IConfigurer
     def update_config(self, config):
-        '''
-        Add our template directories to the list of available templates
+        """
+        Add our template directories to the list of available templates.
 
         :param config:
-        '''
+        """
         toolkit.add_template_directory(config, '../theme/templates')
         toolkit.add_resource('../theme/assets', 'ckanext-gallery')
         toolkit.add_public_directory(config, '../theme/assets/vendor')
 
     ## IResourceView
     def info(self):
-        ''' '''
         return {
             'name': 'gallery',
             'title': 'Gallery',
@@ -49,12 +57,12 @@ class GalleryPlugin(SingletonPlugin):
                 'image_plugin': [not_empty],
                 'image_title': [ignore_empty, is_datastore_field],
                 'image_delimiter': [ignore_empty],
-                },
+            },
             'icon': 'image',
             'iframed': False,
             'filterable': True,
             'preview_enabled': False,
-            'full_page_edit': False
+            'full_page_edit': False,
         }
 
     def datastore_validate(self, context, data_dict, all_field_ids):
@@ -86,18 +94,17 @@ class GalleryPlugin(SingletonPlugin):
         return 'gallery/form.html'
 
     def can_view(self, data_dict):
-        '''Specify which resources can be viewed by this plugin
+        """
+        Specify which resources can be viewed by this plugin.
 
         :param data_dict:
-
-        '''
+        """
         # Check that we have a datastore for this resource
         if data_dict['resource'].get('datastore_active'):
             return True
         return False
 
     def _get_request_filters(self):
-        ''' '''
         filters = {}
         for f in unquote(toolkit.request.params.get('filters', '')).split('|'):
             if f:
@@ -108,12 +115,12 @@ class GalleryPlugin(SingletonPlugin):
         return filters
 
     def setup_template_variables(self, context, data_dict):
-        '''
-        Setup variables available to templates
+        """
+        Setup variables available to templates.
 
         :param context:
         :param data_dict:
-        '''
+        """
         records_per_page = toolkit.config.get('ckanext.gallery.records_per_page', 32)
         current_page = toolkit.request.params.get('page', 1)
         image_list = []
@@ -127,8 +134,11 @@ class GalleryPlugin(SingletonPlugin):
             image_info = plugin.image_info()
             # If we have resource type set, make sure the format of the resource matches
             # Otherwise continue to next record
-            if image_info['resource_type'] and \
-                    data_dict['resource']['format'].lower() not in image_info['resource_type']:
+            if (
+                image_info['resource_type']
+                and data_dict['resource']['format'].lower()
+                not in image_info['resource_type']
+            ):
                 continue
             image_info['plugin'] = plugin
             image_plugins.append(image_info)
@@ -139,17 +149,15 @@ class GalleryPlugin(SingletonPlugin):
         # Set up template variables
         tpl_variables = {
             'images': image_list,
-            'datastore_fields': [{
-                'value': f['id'],
-                'text': f['id']
-                } for f in datastore_fields],
-            'image_plugins': [{
-                'value': f['plugin'].name,
-                'text': f['title']
-                } for f in image_plugins],
+            'datastore_fields': [
+                {'value': f['id'], 'text': f['id']} for f in datastore_fields
+            ],
+            'image_plugins': [
+                {'value': f['plugin'].name, 'text': f['title']} for f in image_plugins
+            ],
             'defaults': {},
             'resource_id': data_dict['resource']['id'],
-            'package_name': data_dict['package']['name']
+            'package_name': data_dict['package']['name'],
         }
         # Load the images
         # Only try and load images, if an image field has been selected
@@ -167,7 +175,7 @@ class GalleryPlugin(SingletonPlugin):
                 'limit': records_per_page,
                 'offset': offset,
                 'filters': filters,
-                'sort': '_id'
+                'sort': '_id',
             }
             # Add the full text filter
             fulltext = toolkit.request.params.get('q')
@@ -186,7 +194,7 @@ class GalleryPlugin(SingletonPlugin):
                     image_defaults = {
                         'title': image_title,
                         'record_id': record['_id'],
-                        'resource_id': data_dict['resource']['id']
+                        'resource_id': data_dict['resource']['id'],
                     }
                     field_value = record.get(image_field, None)
                     if field_value:
@@ -217,9 +225,10 @@ class GalleryPlugin(SingletonPlugin):
         return tpl_variables
 
     def pager_url(self, **kwargs):
-        '''
-        Adds a view id and the view args to the kwargs passed to the ckan pager_url function.
-        '''
+        """
+        Adds a view id and the view args to the kwargs passed to the ckan pager_url
+        function.
+        """
         view_id = toolkit.request.params.get('view_id')
         if view_id:
             kwargs['view_id'] = str(view_id)
