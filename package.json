@@ -1,6 +1,6 @@
 {
   "name": "ckanext-gallery",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A CKAN extension for a dataset gallery view.",
   "repository": {
     "type": "git",
