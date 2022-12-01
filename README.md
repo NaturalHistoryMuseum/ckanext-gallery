@@ -80,7 +80,8 @@ There's only one option that can be specified in the `.ini` file:
 # Usage
 
 <!--usage-start-->
-To use as a view, the 'Gallery' type should be available after installing the plugin.
+To use as a view, no further setup is needed; the 'Gallery' type should be available for resources
+after installing the plugin.
 
 ## Interfaces
 
