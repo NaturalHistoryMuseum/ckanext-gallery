@@ -71,9 +71,9 @@ Installing from a `pyproject.toml` in editable mode (i.e. `pip install -e`) requ
 <!--configuration-start-->
 There's only one option that can be specified in the `.ini` file:
 
-Name|Description|Default
---|---|--
-`ckanext.gallery.records_per_page`|Number of images to display on a page|32
+| Name                               | Description                           | Default |
+|------------------------------------|---------------------------------------|---------|
+| `ckanext.gallery.records_per_page` | Number of images to display on a page | 32      |
 
 <!--configuration-end-->
 
