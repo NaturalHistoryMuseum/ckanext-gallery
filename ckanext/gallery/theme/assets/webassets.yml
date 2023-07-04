@@ -1,6 +1,9 @@
 main-js:
   output: ckanext-gallery/%(version)s_main.js
   filters: rjsmin
+  extra:
+    preload:
+      - base/main
   contents:
     - vendor/blueimp-gallery/js/blueimp-gallery.js
     - vendor/jquery-ui-1.12.1.custom/jquery-ui.js
