@@ -31,7 +31,10 @@ ckan.module('gallery', function (jQuery, _) {
       $gallery.data('image', image);
 
       // Update download link
-      $('#blueimp-gallery a.gallery-control-download').attr('href', image.href);
+      $('#blueimp-gallery a.gallery-control-download').attr(
+        'href',
+        image.download || image.href,
+      );
 
       if (image.copyright) {
         $gallery.find('.copyright').html(image.copyright);
