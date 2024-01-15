@@ -16,7 +16,7 @@ _A CKAN extension for a dataset gallery view._
 # Overview
 
 <!--overview-start-->
-Adds a gallery view for resources on a CKAN instance. Two plugins are included in this extension: `gallery` and `gallery_image`.
+Adds a gallery view for resources on a CKAN instance. Three plugins are included in this extension: the main plugin (`gallery`) and two view plugins for specific image/data types (`gallery_image` and `gallery_iiif`).
 
 Based on [blueimp Gallery](https://blueimp.github.io/Gallery).
 
