@@ -1,7 +1,3 @@
-/**
- * Created by bens3 on 04/11/15.
- */
-
 ckan.module('gallery', function (jQuery, _) {
   var self;
 
@@ -20,9 +16,6 @@ ckan.module('gallery', function (jQuery, _) {
     _openLightbox: function (e) {
       var options = {
         index: $(this).data('index'),
-        //            onclose: function () {
-        //                self._hideDownloadTooltip()
-        //            },
         onslide: function () {
           self._onImageUpdate();
         },
@@ -39,7 +32,6 @@ ckan.module('gallery', function (jQuery, _) {
 
       // Update download link
       $('#blueimp-gallery a.gallery-control-download').attr('href', image.href);
-      //        $('#blueimp-gallery a.gallery-control-download').on('click', jQuery.proxy(self._downloadImage));
 
       if (image.copyright) {
         $gallery.find('.copyright').html(image.copyright);
@@ -52,24 +44,6 @@ ckan.module('gallery', function (jQuery, _) {
         $gallery.find('.gallery-control-link').hide();
       }
     },
-    //    _downloadImage: function(e){
-    //        self.downloadFile('http://www.nhm.ac.uk/services/media-store/asset/2d63e01b999aaa0581397d9e629e4bc9f30677a7/contents/preview', function(blob) {
-    //            saveAs(blob, "image.png");
-    //        });
-    //        e.stopPropagation();
-    //        return false;
-    //    },
-    //    downloadFile: function(url, success){
-    //        var xhr = new XMLHttpRequest();
-    //        xhr.open('GET', url, true);
-    //        xhr.responseType = "blob";
-    //        xhr.onreadystatechange = function () {
-    //            if (xhr.readyState == 4) {
-    //                if (success) success(xhr.response);
-    //            }
-    //        };
-    //       xhr.send(null);
-    //    },
     options: {
       images: [],
     },
