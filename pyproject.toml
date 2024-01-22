@@ -37,6 +37,7 @@ changelog = "https://github.com/NaturalHistoryMuseum/ckanext-gallery/blob/main/C
 [project.entry-points."ckan.plugins"]
 gallery = "ckanext.gallery.plugins.gallery:GalleryPlugin"
 gallery_image = "ckanext.gallery.plugins.image:GalleryImagePlugin"
+gallery_iiif = "ckanext.gallery.plugins.iiif:GalleryIIIFPlugin"
 
 
 [build-system]
