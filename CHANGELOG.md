@@ -1,5 +1,31 @@
 # Changelog
 
+## v3.0.0 (2024-01-22)
+
+### Breaking Changes
+
+- implement the correct interface methods
+
+### Feature
+
+- add plugin for iiif images
+- use download url for download button if available
+
+### Refactor
+
+- implement the correct interface methods
+
+### Chores/Misc
+
+- remove commented sections from js
+- add build section to read the docs config
+- add regex for version line in citation file
+- add citation.cff to list of files with version
+- add contributing guidelines
+- add code of conduct
+- add citation file
+- update support.md links
+
 ## v2.2.9 (2023-07-17)
 
 ### Docs
