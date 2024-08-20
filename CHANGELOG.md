@@ -1,5 +1,7 @@
 # Changelog
 
+## v3.0.1 (2024-08-20)
+
 ## v3.0.0 (2024-01-22)
 
 ### Breaking Changes
