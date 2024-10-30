@@ -4,9 +4,9 @@
 # This file is part of ckanext-gallery
 # Created by the Natural History Museum in London, UK
 
-from ckanext.gallery.lib.helpers import get_datastore_fields
-
 from ckan.plugins import toolkit
+
+from ckanext.gallery.lib.helpers import get_datastore_fields
 
 
 def is_datastore_field(value, context):
