@@ -37,7 +37,7 @@ class GalleryIIIFPlugin(SingletonPlugin):
         :param record: the record dict itself
         :param data_dict: relevant data in a dict, currently we only use the
             resource_view contained within
-        :return: a list of dicts
+        :returns: a list of dicts
         """
 
         images = []

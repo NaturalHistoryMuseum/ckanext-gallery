@@ -16,7 +16,7 @@ class IGalleryImage(interfaces.Interface):
         """
         Returns information about this plugin.
 
-        :return:
+        :returns:
         """
 
     def get_images(self, field_value, record, data_dict):
@@ -33,5 +33,5 @@ class IGalleryImage(interfaces.Interface):
             - title (title in the popup viewer and image alt)
             - record_id
 
-        :return: list of dicts
+        :returns: list of dicts
         """

@@ -37,7 +37,7 @@ class GalleryImagePlugin(SingletonPlugin):
         :param record: the record dict itself
         :param data_dict: relevant data in a dict, currently we only use the
             resource_view contained within
-        :return: a list of dicts
+        :returns: a list of dicts
         """
         # retrieve the delimiter if there is one
         delimiter = data_dict['resource_view'].get('image_delimiter', None)
