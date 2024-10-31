@@ -15,7 +15,7 @@ def get_datastore_fields(resource_id):
     without searching again.
 
     :param resource_id: return:
-    :return: list of field dicts
+    :returns: list of field dicts
     """
     try:
         fields = _cache[resource_id]

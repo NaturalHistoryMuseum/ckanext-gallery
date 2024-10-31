@@ -4,9 +4,9 @@
 # This file is part of ckanext-gallery
 # Created by the Natural History Museum in London, UK
 
-from ckanext.gallery.plugins.interfaces import IGalleryImage
-
 from ckan.plugins import SingletonPlugin, implements
+
+from ckanext.gallery.plugins.interfaces import IGalleryImage
 
 
 class GalleryImagePlugin(SingletonPlugin):
@@ -17,11 +17,11 @@ class GalleryImagePlugin(SingletonPlugin):
     implements(IGalleryImage)
 
     def image_info(self):
-        '''
+        """
 
         :returns: If resource type is set, only dataset of that type will be available
 
-        '''
+        """
         return {
             'title': 'Text',
             'resource_type': ['csv', 'tsv'],
@@ -35,8 +35,9 @@ class GalleryImagePlugin(SingletonPlugin):
 
         :param field_value: the value of the record's image field
         :param record: the record dict itself
-        :param data_dict: relevant data in a dict, currently we only use the resource_view contained within
-        :return: a list of dicts
+        :param data_dict: relevant data in a dict, currently we only use the
+            resource_view contained within
+        :returns: a list of dicts
         """
         # retrieve the delimiter if there is one
         delimiter = data_dict['resource_view'].get('image_delimiter', None)
