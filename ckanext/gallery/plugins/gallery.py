@@ -5,6 +5,7 @@
 # Created by the Natural History Museum in London, UK
 
 import copy
+from urllib.parse import unquote
 
 from ckan.lib import helpers  # helpers.Page is not in toolkit.h
 from ckan.plugins import (
@@ -15,11 +16,11 @@ from ckan.plugins import (
     interfaces,
     toolkit,
 )
+
 from ckanext.datastore.interfaces import IDatastore
 from ckanext.gallery.lib.helpers import get_datastore_fields
 from ckanext.gallery.logic.validators import is_datastore_field
 from ckanext.gallery.plugins.interfaces import IGalleryImage
-from urllib.parse import unquote
 
 not_empty = toolkit.get_validator('not_empty')
 ignore_empty = toolkit.get_validator('ignore_empty')
@@ -66,31 +67,31 @@ class GalleryPlugin(SingletonPlugin):
         }
 
     def datastore_validate(self, context, data_dict, all_field_ids):
-        '''
+        """
 
         :param context:
         :param data_dict:
         :param all_field_ids:
 
-        '''
+        """
         return data_dict
 
     def view_template(self, context, data_dict):
-        '''
+        """
 
         :param context:
         :param data_dict:
 
-        '''
+        """
         return 'gallery/view.html'
 
     def form_template(self, context, data_dict):
-        '''
+        """
 
         :param context:
         :param data_dict:
 
-        '''
+        """
         return 'gallery/form.html'
 
     def can_view(self, data_dict):
