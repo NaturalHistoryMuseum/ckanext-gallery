@@ -19,7 +19,7 @@ classifiers = [
     "Programming Language :: Python :: 3.8"
 ]
 dependencies = [
-    "ckantools>=0.4.1"
+    "ckantools>=0.4.2"
 ]
 
 [project.optional-dependencies]
