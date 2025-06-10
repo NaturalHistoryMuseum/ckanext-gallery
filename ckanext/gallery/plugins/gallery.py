@@ -124,6 +124,10 @@ class GalleryPlugin(SingletonPlugin):
         """
         records_per_page = toolkit.config.get('ckanext.gallery.records_per_page', 32)
         current_page = toolkit.request.params.get('page', 1)
+        try:
+            current_page = int(current_page)
+        except ValueError:
+            current_page = 1
         image_list = []
 
         # Get list of datastore fields and format into a dict, ready for a form
@@ -163,7 +167,7 @@ class GalleryPlugin(SingletonPlugin):
         # Load the images
         # Only try and load images, if an image field has been selected
         if image_field and image_plugin:
-            offset = (int(current_page) - 1) * records_per_page
+            offset = (current_page - 1) * records_per_page
             # We only want to get records that have both the image field populated
             # So add filters to the datastore search params
             filters = self._get_request_filters()
