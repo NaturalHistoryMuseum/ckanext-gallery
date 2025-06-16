@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.5 (2025-06-16)
+
+### Fix
+
+- try and convert page param to int
+
 ## v3.0.4 (2025-06-09)
 
 ### Build System(s)
