@@ -1,5 +1,15 @@
 # Changelog
 
+## v3.0.6 (2026-01-05)
+
+### Fix
+
+- make resource_types configurable
+
+### Docs
+
+- add resource config options to readme
+
 ## v3.0.5 (2025-06-16)
 
 ### Fix
