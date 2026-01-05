@@ -78,11 +78,13 @@ Installing from a `pyproject.toml` in editable mode (i.e. `pip install -e`) requ
 # Configuration
 
 <!--configuration-start-->
-There's only one option that can be specified in the `.ini` file:
+These are the options that can be specified in your `.ini` file:
 
-| Name                               | Description                           | Default |
-|------------------------------------|---------------------------------------|---------|
-| `ckanext.gallery.records_per_page` | Number of images to display on a page | 32      |
+| Name                                   | Description                                                                                           | Default   |
+|----------------------------------------|-------------------------------------------------------------------------------------------------------|-----------|
+| `ckanext.gallery.records_per_page`     | Number of images to display on a page                                                                 | 32        |
+| `ckanext.gallery.image.resource_types` | Space-separated list of resource formats that can use the basic image field type (in `plugins.image`) | `csv tsv` |
+| `ckanext.gallery.iiif.resource_types`  | Space-separated list of resource formats that can use the 'IIIF' image field type (in `plugins.iiif`) | `csv tsv` |
 
 <!--configuration-end-->
 
