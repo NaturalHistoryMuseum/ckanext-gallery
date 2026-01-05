@@ -4,7 +4,7 @@
 # This file is part of ckanext-gallery
 # Created by the Natural History Museum in London, UK
 
-from ckan.plugins import SingletonPlugin, implements
+from ckan.plugins import SingletonPlugin, implements, toolkit
 
 from ckanext.gallery.plugins.interfaces import IGalleryImage
 
@@ -24,7 +24,9 @@ class GalleryImagePlugin(SingletonPlugin):
         """
         return {
             'title': 'Text',
-            'resource_type': ['csv', 'tsv'],
+            'resource_type': toolkit.config.get(
+                'ckanext.gallery.image.resource_types', 'csv tsv'
+            ).split(' '),
             'field_type': ['text'],
         }
 

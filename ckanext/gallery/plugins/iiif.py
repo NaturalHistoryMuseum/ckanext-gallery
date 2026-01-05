@@ -24,7 +24,9 @@ class GalleryIIIFPlugin(SingletonPlugin):
         """
         return {
             'title': 'IIIF',
-            'resource_type': ['csv', 'tsv'],
+            'resource_type': toolkit.config.get(
+                'ckanext.gallery.iiif.resource_types', 'csv tsv'
+            ).split(' '),
             'field_type': ['text'],
         }
 
