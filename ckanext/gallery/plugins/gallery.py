@@ -213,17 +213,6 @@ class GalleryPlugin(SingletonPlugin):
                     }
                     field_value = record.get(image_field, None)
                     if field_value:
-                        # print('')
-                        # print('')
-                        # print('')
-                        # print('field_value: ',field_value)
-                        # print('')
-                        # print('record: ',record)
-                        # print('')
-                        # print('data_dict: ',data_dict)
-                        # print('')
-                        # print('')
-                        # print('')
                         images = plugin.get_images(field_value, record, data_dict)
                         for image in images:
                             image_default_copy = copy.copy(image_defaults)
