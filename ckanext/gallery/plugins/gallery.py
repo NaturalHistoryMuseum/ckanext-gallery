@@ -132,27 +132,30 @@ class GalleryPlugin(SingletonPlugin):
 
         # Get list of datastore fields and format into a dict, ready for a form
         datastore_fields = get_datastore_fields(data_dict['resource']['id'])
-        # Find if the fields contain a DwC media field
-        contains_dwc_field = any(
-            item.get('id') == 'associatedMedia' and item.get('type') == 'array'
-            for item in datastore_fields
-        )
 
         image_plugins = []
         # Get gallery image plugins
         for plugin in PluginImplementations(IGalleryImage):
             image_info = plugin.image_info()
+            # If required fields are present
+            required_fields = image_info.get('required_fields', None)
+            if required_fields:
+                contains_required_fields = any(
+                    item.get('id') == req_field['field_name']
+                    and item.get('type') == req_field['field_type']
+                    for item in datastore_fields
+                    for req_field in required_fields
+                )
+            else:
+                contains_required_fields = True
             # If we have resource type set, make sure the format of the resource matches
-            # And check if fields contain a dwc field
+            # And check if required fields are present
             # Otherwise continue to next record
             if (
                 image_info['resource_type']
                 and data_dict['resource']['format'].lower()
                 not in image_info['resource_type']
-                or (
-                    image_info['title'] == 'DwC associated media'
-                    and not contains_dwc_field
-                )
+                or not contains_required_fields
             ):
                 continue
             image_info['plugin'] = plugin
