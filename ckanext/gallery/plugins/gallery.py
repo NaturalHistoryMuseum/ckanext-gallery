@@ -132,17 +132,27 @@ class GalleryPlugin(SingletonPlugin):
 
         # Get list of datastore fields and format into a dict, ready for a form
         datastore_fields = get_datastore_fields(data_dict['resource']['id'])
+        # Find if the fields contain a DwC media field
+        contains_dwc_field = any(
+            item.get('id') == 'associatedMedia' and item.get('type') == 'array'
+            for item in datastore_fields
+        )
 
         image_plugins = []
         # Get gallery image plugins
         for plugin in PluginImplementations(IGalleryImage):
             image_info = plugin.image_info()
             # If we have resource type set, make sure the format of the resource matches
+            # And check if fields contain a dwc field
             # Otherwise continue to next record
             if (
                 image_info['resource_type']
                 and data_dict['resource']['format'].lower()
                 not in image_info['resource_type']
+                or (
+                    image_info['title'] == 'DwC associated media'
+                    and not contains_dwc_field
+                )
             ):
                 continue
             image_info['plugin'] = plugin
@@ -203,6 +213,17 @@ class GalleryPlugin(SingletonPlugin):
                     }
                     field_value = record.get(image_field, None)
                     if field_value:
+                        # print('')
+                        # print('')
+                        # print('')
+                        # print('field_value: ',field_value)
+                        # print('')
+                        # print('record: ',record)
+                        # print('')
+                        # print('data_dict: ',data_dict)
+                        # print('')
+                        # print('')
+                        # print('')
                         images = plugin.get_images(field_value, record, data_dict)
                         for image in images:
                             image_default_copy = copy.copy(image_defaults)
