@@ -1,5 +1,16 @@
 # Changelog
 
+## v3.0.7 (2026-04-08)
+
+### Fix
+
+- **gallery-view**: dynamically handle required fields logic
+- **gallery-view**: only allow dwc option if data is valid type
+
+### Refactor
+
+- remove prints
+
 ## v3.0.6 (2026-01-05)
 
 ### Fix
