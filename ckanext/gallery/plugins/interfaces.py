@@ -21,8 +21,9 @@ class IGalleryImage(interfaces.Interface):
 
     def get_images(self, field_value, record, data_dict):
         """
-        Retrieve images from a record and present them as a list of dicts. Valid output
-        fields for each image:
+        Retrieve images from a record and present them as a list of dicts.
+
+        Valid output fields for each image:
 
             - href (main/preview URL; required)
             - thumbnail (URL for a smaller version of the image)

@@ -102,31 +102,35 @@ The `IGalleryImage` interface allows plugins to override settings.
 from ckan.plugins import SingletonPlugin, implements
 from ckanext.gallery.plugins.interfaces import IGalleryImage
 
+
 class YourPlugin(SingletonPlugin):
-  implements(IGalleryImage)
+    implements(IGalleryImage)
 
+    def image_info(self):
+        """
+        Return info for this plugin. If resource type is set,
+        only datasets of that type will be available.
+        """
+        return {
+            'title': 'Text',
+            'resource_type': ['csv', 'tsv'],
+            'field_type': ['text'],
+        }
 
-  def image_info(self):
-    '''
-    Return info for this plugin. If resource type is set,
-    only datasets of that type will be available.
-    '''
-    return {u'title': u'Text',
-            u'resource_type': [u'csv', u'tsv'],
-            u'field_type': [u'text']}
-
-
-  def get_images(self, field_value, record, data_dict):
-    '''
-    Process images from a single record to return custom metadata.
-    The field_value depends on the image field you choose.
-    '''
-    images = [{
-      u'href': field_value[u'url'],
-      u'thumbnail': field_value[u'url'].replace(u'preview', u'thumbnail'),
-      u'record_id': record[u'_id']
-    } for img in field_value]
-    return image
+    def get_images(self, field_value, record, data_dict):
+        """
+        Process images from a single record to return custom metadata.
+        The field_value depends on the image field you choose.
+        """
+        images = [
+            {
+                'href': field_value['url'],
+                'thumbnail': field_value['url'].replace('preview', 'thumbnail'),
+                'record_id': record['_id'],
+            }
+            for img in field_value
+        ]
+        return image
 ```
 
 ## Templates
