@@ -41,7 +41,6 @@ class GalleryIIIFPlugin(SingletonPlugin):
             resource_view contained within
         :returns: a list of dicts
         """
-
         images = []
 
         # retrieve the delimiter if there is one
