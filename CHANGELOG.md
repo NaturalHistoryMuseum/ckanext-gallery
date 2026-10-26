@@ -1,5 +1,20 @@
 # Changelog
 
+## v3.0.8 (2026-10-26)
+
+### Refactor
+
+- run pre-commit and refactor all files
+
+### CI System(s)
+
+- update pre-commit config
+- update action versions update the actions to the latest versions
+
+### Chores/Misc
+
+- update team names
+
 ## v3.0.7 (2026-04-08)
 
 ### Fix
